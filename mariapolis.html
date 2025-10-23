@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mariapolis y Centros</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="casa.ico">
+</head>
+
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="index.html" class="menu-item">
+        <img src="casa.svg" alt="Inicio" class="menu-icon">
+        <span class="menu-text">Inicio</span>
+      </a>
+      <a href="cancionero.html" class="menu-item">
+        <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+        <span class="menu-text">Cancionero</span>
+      </a>
+      <a href="mariapolis.html" class="menu-item active">
+        <img src="mundo.svg" alt="Mariapolis & Centros" class="menu-icon">
+        <span class="menu-text">Mariapolis & Centros</span>
+      </a>
+      <a href="gen-animadores.html" class="menu-item">
+        <img src="vida.svg" alt="Gen Animadores" class="menu-icon">
+        <span class="menu-text">Gen Animadores</span>
+      </a>
+      <a href="red-gen.html" class="menu-item">
+        <img src="diario.svg" alt="Red Gen Mundial" class="menu-icon">
+        <span class="menu-text">Red Gen Mundial</span>
+      </a>
+      <a href="biblioteca.html" class="menu-item">
+        <img src="libros.svg" alt="Biblioteca" class="menu-icon">
+        <span class="menu-text">Biblioteca</span>
+      </a>
+      <a href="introduccion.html" class="menu-item">
+        <img src="libro.svg" alt="Sobre el Movimiento" class="menu-icon">
+        <span class="menu-text">Sobre el Movimiento</span>
+      </a>
+     </div>
+
+
+      <!-- Contenido principal -->
+      <main class="main">
+        <div class="intro-container">
+          <header class="intro-header">
+            <h1>Mariapolis y centros Mariapolis</h1>
+            <p class="intro-subtitle">Descubri las ciudadelas de todo el mundo</p>
+          </header>
+        <div>
+          <h4>¿Que son las Mariapolis Permanentes?</h4>
+          <p>Las mariapolis permanetes son Ciudadelas en la cual se vive todo el día con todas las personas la regla de oro <strong>"Hace al"</strong></p>
+        </div>
+          <!-- Grid desacomodado de secciones -->
+          <div class="intro-grid">
+            
+            <!-- Sección 1: Los Focolares en guerra -->
+            <div class="intro-card" data-section="focolares-guerra">
+              <div class="card-image">
+                <img src="guerra-1943.jpg" alt="Trento 1943" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>Los Focolares en tiempos de guerra</h3>
+                <span class="card-year">1943</span>
+                <p class="card-description">En plena Segunda Guerra Mundial, en Trento, una joven llamada Chiara Lubich descubre una nueva forma de vivir el Evangelio...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>El 7 de diciembre de 1943, mientras las bombas caían sobre Trento, Chiara Lubich y sus primeras compañeras se refugiaron en los sótanos. Fue allí donde decidieron hacer de Dios el ideal de sus vidas.</p>
+                <p>En ese refugio antiaéreo nació el núcleo del futuro Movimiento de los Focolares. Chiara y sus amigas comenzaron a vivir el Evangelio de manera radical, compartiendo todo lo que tenían con los más necesitados de la ciudad bombardeada.</p>
+                <p>La guerra, paradójicamente, se convirtió en el crisol donde se forjó una espiritualidad de unidad que después se extendería por todo el mundo.</p>
+              </div>
+            </div>
+
+            <!-- Sección 2: Revolución Arcoíris -->
+            <div class="intro-card" data-section="revolucion-arcoiris">
+              <div class="card-image">
+                <img src="gen-60s.jpg" alt="Generación Nueva años 60" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>La Revolución Arcoíris</h3>
+                <span class="card-year">1960-Hoy</span>
+                <p class="card-description">Los jóvenes del movimiento protagonizan una revolución silenciosa de amor, creando la "Generación Nueva"...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>En los años 60, mientras el mundo vivía revoluciones violentas, los jóvenes del movimiento crearon la "Revolución Arcoíris": una revolución de amor, paz y fraternidad universal.</p>
+                <p>Nacía así la "Generación Nueva" (Gen), jóvenes comprometidos en construir un mundo más unido a través del diálogo, la solidaridad y el respeto mutuo.</p>
+                <p>Su símbolo, el arcoíris, representa la diversidad unida: diferentes colores que juntos crean belleza.</p>
+              </div>
+            </div>
+
+            <!-- Sección 3: Chiara Lubich -->
+            <div class="intro-card" data-section="chiara-lubich">
+              <div class="card-image">
+                <img src="chiara-lubich.jpg" alt="Chiara Lubich" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>Chiara Lubich: La Fundadora</h3>
+                <span class="card-year">1920-2008</span>
+                <p class="card-description">Silvia Lubich, conocida como Chiara, dedicó su vida a construir un mundo más unido siguiendo el testamento de Jesús...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>Nacida en Trento el 22 de enero de 1920, Silvia Lubich (Chiara) fue una mística y fundadora italiana. Recibió múltiples reconocimientos internacionales por su obra en favor de la fraternidad universal.</p>
+                <p>Entre sus logros destacan el Premio Templeton para el Progreso de la Religión (1977), varios doctorados honoris causa, y el reconocimiento de líderes mundiales de todas las religiones.</p>
+                <p>Su carisma: construir la unidad entre todos los pueblos, religiones y culturas, basándose en la oración de Jesús "Que todos sean uno".</p>
+              </div>
+            </div>
+
+            <!-- Sección 4: Espiritualidad de la Unidad -->
+            <div class="intro-card" data-section="espiritualidad-unidad">
+              <div class="card-image">
+                <img src="unidad.jpg" alt="Espiritualidad de la Unidad" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>La Espiritualidad de la Unidad</h3>
+                <span class="card-year">Carisma</span>
+                <p class="card-description">"Que todos sean uno" - Esta oración de Jesús es el corazón del carisma del movimiento...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>La espiritualidad de la unidad se basa en las palabras de Jesús: "Que todos sean uno como tú, Padre, en mí y yo en ti" (Jn 17,21).</p>
+                <p>Se fundamenta en tres pilares: amar a todos como hermanos, vivir el Evangelio en la vida cotidiana, y ver a Jesús especialmente presente en el sufrimiento (Jesús Abandonado).</p>
+                <p>Esta espiritualidad busca construir puentes entre personas de diferentes religiones, culturas y condiciones sociales.</p>
+              </div>
+            </div>
+
+            <!-- Sección 5: Economía de Comunión -->
+            <div class="intro-card" data-section="economia-comunion">
+              <div class="card-image">
+                <img src="edc.jpg" alt="Economía de Comunión" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>Economía de Comunión</h3>
+                <span class="card-year">Desde 1991</span>
+                <p class="card-description">Un proyecto económico revolucionario donde las empresas comparten sus ganancias para erradicar la pobreza...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>Nacida en Brasil en 1991, la Economía de Comunión propone un modelo empresarial basado en el compartir las ganancias en tres partes iguales:</p>
+                <ul>
+                  <li>Un tercio para ayudar a personas necesitadas</li>
+                  <li>Un tercio para el desarrollo de la empresa</li>
+                  <li>Un tercio para formar personas en la "cultura del dar"</li>
+                </ul>
+                <p>Hoy participan más de 800 empresas en todo el mundo, demostrando que es posible una economía más justa y solidaria.</p>
+              </div>
+            </div>
+
+            <!-- Sección 6: Ciudades Piloto -->
+            <div class="intro-card" data-section="ciudades-piloto">
+              <div class="card-image">
+                <img src="mariapolis.jpg" alt="Ciudades Piloto" class="section-img">
+              </div>
+              <div class="card-content">
+                <h3>Las Ciudades Piloto</h3>
+                <span class="card-year">Mundial</span>
+                <p class="card-description">Pequeñas ciudades donde se experimenta la fraternidad universal, creando modelos de convivencia...</p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span class="btn-text">Leer más</span>
+                  <span class="btn-icon">+</span>
+                </button>
+              </div>
+              <div class="card-expanded">
+                <p>Las Ciudades Piloto son pequeños laboratorios de fraternidad donde personas de diferentes religiones, culturas y razas conviven en armonía.</p>
+                <p>Ejemplos incluyen Mariápolis en Italia, O'Higgins en Argentina, Araceli en Brasil, y muchas otras en los cinco continentes.</p>
+                <p>En estas comunidades se experimenta un estilo de vida basado en la fraternidad, la solidaridad y el respeto mutuo.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- JavaScript para la funcionalidad -->
+        <script>
+          function toggleCard(button) {
+            const card = button.closest('.intro-card');
+            const expanded = card.querySelector('.card-expanded');
+            const icon = button.querySelector('.btn-icon');
+            const text = button.querySelector('.btn-text');
+            
+            // Toggle la expansión
+            expanded.classList.toggle('expanded');
+            card.classList.toggle('expanded');
+            
+            // Cambiar el icono y texto
+            if (expanded.classList.contains('expanded')) {
+              icon.textContent = '−';
+              text.textContent = 'Leer menos';
+            } else {
+              icon.textContent = '+';
+              text.textContent = 'Leer más';
+            }
+          }
+        </script>
+      </main>
+  </body>
+</html>

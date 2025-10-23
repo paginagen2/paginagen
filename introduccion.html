@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducción al Movimiento - Gen 2</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="introduccion.css">
+  <link rel="icon" href="casa.ico">
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Sidebar -->
+        <div class="page-container">
+    <!-- Sidebar simplificado -->
+    <div class="sidebar">
+      <a href="index.html" class="menu-item">
+        <img src="casa.svg" alt="Inicio" class="menu-icon">
+        <span class="menu-text">Inicio</span>
+      </a>
+      <a href="cancionero.html" class="menu-item">
+        <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+        <span class="menu-text">Cancionero</span>
+      </a>
+      <a href="gen-animadores.html" class="menu-item">
+        <img src="vida.svg" alt="Gen Animadores" class="menu-icon">
+        <span class="menu-text">Gen Animadores</span>
+      </a>
+      <a href="biblioteca.html" class="menu-item">
+        <img src="libros.svg" alt="Biblioteca" class="menu-icon">
+        <span class="menu-text">Biblioteca</span>
+      </a>
+      <a href="introduccion.html" class="menu-item active">
+        <img src="libro.svg" alt="Sobre el Movimiento" class="menu-icon">
+        <span class="menu-text">Sobre el Movimiento</span>
+      </a>
+    </div>
+
+        <!-- Contenido principal -->
+        <main class="main">
+          <div class="intro-container">
+            
+            <!-- Hero Header Estilo Gen 2 -->
+            <div class="hero-header">
+              <div class="hero-content">
+                <h1 class="hero-title">Introducción al Movimiento</h1>
+                <p class="hero-subtitle">Descubre la historia, espiritualidad y obra de los Focolares</p>
+              </div>
+              <div class="hero-decoration">
+                <div class="floating-symbol">✨</div>
+                <div class="floating-symbol">🕊️</div>
+                <div class="floating-symbol">🌍</div>
+                <div class="floating-symbol">❤️</div>
+                <div class="floating-symbol">🌈</div>
+              </div>
+            </div>
+
+            <!-- Navegación de Contenido -->
+            <div class="content-navigation">
+              <div class="nav-description">
+                <p>Descubre la rica historia y espiritualidad del Movimiento de los Focolares a través de este recorrido completo por sus orígenes, desarrollo y presencia actual en el mundo.</p>
+              </div>
+            </div>
+
+            <!-- Secciones del Contenido -->
+            
+            <!-- ORÍGENES (1943-1950) -->
+            <section class="content-section" id="origins">
+              <div class="section-header">
+                <h2>🕊️ Los Orígenes (1943-1950)</h2>
+                <p>De un refugio antiaéreo nace un movimiento mundial</p>
+              </div>
+              
+              <div class="cards-grid">
+                
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">💣</div>
+                    <div class="card-title">
+                      <h3>Los Focolares en tiempos de guerra</h3>
+                      <span class="card-year">1943</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    En plena Segunda Guerra Mundial, en Trento, una joven llamada Chiara Lubich descubre una nueva forma de vivir el Evangelio...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>El 7 de diciembre de 1943, mientras las bombas caían sobre Trento, Chiara Lubich y sus primeras compañeras se refugiaron en los sótanos. Fue allí donde decidieron hacer de Dios el ideal de sus vidas.</p>
+                    
+                    <p>En ese refugio antiaéreo nació el núcleo del futuro Movimiento de los Focolares. Chiara y sus amigas comenzaron a vivir el Evangelio de manera radical, compartiendo todo lo que tenían con los más necesitados de la ciudad bombardeada.</p>
+                    
+                    <p>La guerra, paradójicamente, se convirtió en el crisol donde se forjó una espiritualidad de unidad que después se extendería por todo el mundo. Las primeras "focolarine" vivían en pequeños apartamentos llamados "focolares" (hogar, en italiano), de donde toma nombre el movimiento.</p>
+                    
+                    <h4>Primeros pasos:</h4>
+                    <ul>
+                      <li><strong>1943:</strong> Chiara y las primeras compañeras en Trento</li>
+                      <li><strong>1944:</strong> Primeros contactos con los pobres de la ciudad</li>
+                      <li><strong>1945:</strong> Llegan los primeros hombres al movimiento</li>
+                      <li><strong>1948:</strong> Aprobación diocesana en Trento</li>
+                      <li><strong>1949:</strong> Primeras comunidades fuera de Italia</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">
+                      <h3>Las Primeras Compañeras</h3>
+                      <span class="card-year">1943-1945</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Doriana Zamboni, Natalia Dallapiccola, Graziella De Luca... Las primeras mujeres que siguieron a Chiara en esta aventura...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Las primeras compañeras de Chiara fueron jóvenes normales que, tocadas por su testimonio de vida evangélica, decidieron seguir el mismo camino de radicalidad en el amor a Dios y al prójimo.</p>
+                    
+                    <h4>Las pioneras:</h4>
+                    <ul>
+                      <li><strong>Doriana Zamboni:</strong> Primera compañera, enfermera, ejemplo de dedicación a los enfermos</li>
+                      <li><strong>Natalia Dallapiccola:</strong> Maestra, se dedicó a la educación de los niños pobres</li>
+                      <li><strong>Graziella De Luca:</strong> Universitaria, llevó el ideal a los ambientes académicos</li>
+                      <li><strong>Alda Fondrieschi:</strong> Trabajadora, testimonio en el mundo laboral</li>
+                    </ul>
+                    
+                    <p>Estas mujeres vivían juntas compartiendo todo: bienes materiales, vida espiritual y apostolado. Su casa se convirtió en punto de referencia para muchas personas necesitadas material y espiritualmente.</p>
+                    
+                    <p>Su vida era tan radiante que pronto se extendió como una "mancha de aceite" por toda la ciudad de Trento y después por Italia y el mundo.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🔥</div>
+                    <div class="card-title">
+                      <h3>El Primer Focolare</h3>
+                      <span class="card-year">1944</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    La primera casa-comunidad donde se experimentó la vida evangélica radical que caracterizaría todo el movimiento...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>El primer "focolare" fue establecido en Via Caprera, Trento. Era un pequeño apartamento donde Chiara y sus compañeras vivían en comunidad, poniendo en práctica el comunismo cristiano de los primeros cristianos descrito en los Hechos de los Apóstoles.</p>
+                    
+                    <h4>Características del primer focolare:</h4>
+                    <ul>
+                      <li><strong>Comunión de bienes:</strong> Todo era de todos</li>
+                      <li><strong>Vida de oración:</strong> Comenzaban y terminaban el día en oración comunitaria</li>
+                      <li><strong>Servicio a los pobres:</strong> La casa estaba siempre abierta a los necesitados</li>
+                      <li><strong>Trabajo:</strong> Cada una trabajaba para contribuir al bien común</li>
+                      <li><strong>Alegría:</strong> La casa irradiaba una alegría contagiosa</li>
+                    </ul>
+                    
+                    <p>Este modelo de vida comunitaria se extendería después por todo el mundo, adaptándose a las diferentes culturas pero manteniendo siempre los mismos principios evangélicos.</p>
+                    
+                    <p>El término "focolare" (hogar en italiano) expresaba la idea de que allí había un fuego encendido: el fuego del amor divino que calentaba todos los corazones.</p>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- EXPANSIÓN (1950-1980) -->
+            <section class="content-section" id="expansion">
+              <div class="section-header">
+                <h2>🌍 La Gran Expansión (1950-1980)</h2>
+                <p>Del pequeño grupo de Trento a un movimiento internacional</p>
+              </div>
+              
+              <div class="cards-grid">
+                
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🌈</div>
+                    <div class="card-title">
+                      <h3>La Revolución Arcoíris</h3>
+                      <span class="card-year">1960-Hoy</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Los jóvenes del movimiento protagonizan una revolución silenciosa de amor, creando la "Generación Nueva"...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>En los años 60, mientras el mundo vivía revoluciones violentas, los jóvenes del movimiento crearon la "Revolución Arcoíris": una revolución de amor, paz y fraternidad universal.</p>
+                    
+                    <p>Nacía así la "Generación Nueva" (Gen), jóvenes comprometidos en construir un mundo más unido a través del diálogo, la solidaridad y el respeto mutuo.</p>
+                    
+                    <h4>Características de la Revolución Arcoíris:</h4>
+                    <ul>
+                      <li><strong>No violencia:</strong> Revolución de corazones, no de armas</li>
+                      <li><strong>Unidad en la diversidad:</strong> El arcoíris une diferentes colores</li>
+                      <li><strong>Fraternidad universal:</strong> Hermanos más allá de religión, raza o cultura</li>
+                      <li><strong>Compromiso social:</strong> Construcción activa de un mundo mejor</li>
+                      <li><strong>Vida evangélica:</strong> Testimonio cristiano en la sociedad</li>
+                    </ul>
+                    
+                    <p>Su símbolo, el arcoíris, representa la diversidad unida: diferentes colores que juntos crean belleza. Los Gen se comprometieron a ser "constructores de puentes" en un mundo dividido.</p>
+                    
+                    <p>Esta revolución se extendió por universidades, escuelas y ambientes juveniles de todo el mundo, creando una red de jóvenes comprometidos con la paz y la justicia.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🏛️</div>
+                    <div class="card-title">
+                      <h3>Reconocimiento de la Iglesia</h3>
+                      <span class="card-year">1962</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    El Papa Juan XXIII aprueba definitivamente el Movimiento de los Focolares como nueva realidad eclesial...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>El 23 de marzo de 1962, el Papa Juan XXIII concede la aprobación definitiva del Movimiento de los Focolares como "Obra de María", reconociendo oficialmente su carisma y misión en la Iglesia.</p>
+                    
+                    <h4>Hitos del reconocimiento eclesial:</h4>
+                    <ul>
+                      <li><strong>1948:</strong> Primera aprobación diocesana en Trento</li>
+                      <li><strong>1956:</strong> Primer decreto de alabanza del Vaticano</li>
+                      <li><strong>1962:</strong> Aprobación pontificia definitiva</li>
+                      <li><strong>1990:</strong> Aprobación de los Estatutos generales</li>
+                      <li><strong>2007:</strong> Reconocimiento como Asociación Privada Internacional de Fieles</li>
+                    </ul>
+                    
+                    <p>Este reconocimiento no solo validaba el carisma de Chiara, sino que abría las puertas para la expansión mundial del movimiento. Significaba que la Iglesia veía en los Focolares un don del Espíritu Santo para toda la humanidad.</p>
+                    
+                    <p>El Papa Juan XXIII, conocido por su apertura al diálogo ecuménico e interreligioso, vio en el movimiento un instrumento privilegiado para la unidad que tanto deseaba para la Iglesia y el mundo.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🌏</div>
+                    <div class="card-title">
+                      <h3>Expansión Internacional</h3>
+                      <span class="card-year">1959-1980</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    El movimiento cruza fronteras llegando a todos los continentes y culturas del mundo...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>A partir de los años 50, el movimiento comenzó una extraordinaria expansión que lo llevaría a estar presente en todos los continentes en menos de 30 años.</p>
+                    
+                    <h4>Cronología de la expansión:</h4>
+                    <ul>
+                      <li><strong>1959:</strong> Alemania - Primera expansión en Europa</li>
+                      <li><strong>1961:</strong> Estados Unidos - Llegada a América del Norte</li>
+                      <li><strong>1963:</strong> Brasil - Primer país latinoamericano</li>
+                      <li><strong>1966:</strong> Filipinas - Expansión en Asia</li>
+                      <li><strong>1968:</strong> Congo - Primeros pasos en África</li>
+                      <li><strong>1972:</strong> Australia - Llegada a Oceanía</li>
+                      <li><strong>1976:</strong> India - Diálogo con las grandes religiones</li>
+                    </ul>
+                    
+                    <p>Cada nueva cultura enriquecía el movimiento con sus propias tradiciones y formas de vivir el Evangelio. El carisma de la unidad se manifestaba respetando y valorando la diversidad.</p>
+                    
+                    <p>Esta expansión no fue planificada desde arriba, sino que surgió espontáneamente del testimonio de vida de los primeros miembros que, al viajar o emigrar, llevaban consigo la experiencia del focolare.</p>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- ESPIRITUALIDAD -->
+            <section class="content-section" id="spirituality">
+              <div class="section-header">
+                <h2>✨ La Espiritualidad de la Unidad</h2>
+                <p>Los pilares espirituales que sostienen todo el movimiento</p>
+              </div>
+              
+              <div class="cards-grid">
+                
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🙏</div>
+                    <div class="card-title">
+                      <h3>Que todos sean uno</h3>
+                      <span class="card-year">Carisma Central</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    "Que todos sean uno" - Esta oración de Jesús es el corazón del carisma del movimiento...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>La espiritualidad de la unidad se basa en las palabras de Jesús: "Que todos sean uno como tú, Padre, en mí y yo en ti" (Jn 17,21). Esta oración se convierte en el programa de vida de todo el movimiento.</p>
+                    
+                    <h4>Los tres pilares fundamentales:</h4>
+                    <ul>
+                      <li><strong>Amar a todos como hermanos:</strong> Ver en cada persona un hermano/hermana</li>
+                      <li><strong>Vivir el Evangelio:</strong> Hacer vida las palabras de Jesús día a día</li>
+                      <li><strong>Jesús Abandonado:</strong> Ver a Jesús especialmente presente en el sufrimiento</li>
+                    </ul>
+                    
+                    <p>Esta espiritualidad busca construir puentes entre personas de diferentes religiones, culturas y condiciones sociales. No es una espiritualidad intimista, sino que empuja hacia la acción y el compromiso social.</p>
+                    
+                    <p>La unidad no es uniformidad: respeta y valoriza las diferencias, creando armonía en la diversidad, como en una sinfonía donde cada instrumento aporta su sonido único.</p>
+                    
+                    <p>Se trata de una espiritualidad "encarnada", que se vive en la familia, el trabajo, la escuela, la política, la economía, transformando todas las realidades humanas desde dentro.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">💔</div>
+                    <div class="card-title">
+                      <h3>Jesús Abandonado</h3>
+                      <span class="card-year">Aspecto Central</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    El grito de Jesús en la cruz "Dios mío, ¿por qué me has abandonado?" ilumina todo sufrimiento humano...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Jesús Abandonado es el aspecto más específico de la espiritualidad del movimiento. Se refiere al momento en que Jesús en la cruz gritó: "Dios mío, Dios mío, ¿por qué me has abandonado?" (Mt 27,46).</p>
+                    
+                    <h4>Significado espiritual:</h4>
+                    <ul>
+                      <li><strong>Solidaridad con el sufrimiento:</strong> Jesús asume todo dolor humano</li>
+                      <li><strong>Amor hasta el extremo:</strong> Amor que no retrocede ante nada</li>
+                      <li><strong>Fuente de unidad:</strong> Su abandono genera unidad entre Padre e Hijo</li>
+                      <li><strong>Esperanza en el dolor:</strong> El sufrimiento tiene sentido y valor</li>
+                    </ul>
+                    
+                    <p>Para los miembros del movimiento, "amar a Jesús Abandonado" significa:</p>
+                    <ul>
+                      <li>Reconocer su presencia en todo sufrimiento propio y ajeno</li>
+                      <li>No escapar del dolor, sino atravesarlo con amor</li>
+                      <li>Ser instrumento de consolación para otros</li>
+                      <li>Transformar el sufrimiento en amor y el amor en unidad</li>
+                    </ul>
+                    
+                    <p>Esta espiritualidad del dolor redentor ha dado esperanza a millones de personas en situaciones de guerra, enfermedad, pobreza, soledad y todo tipo de sufrimientos.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🕊️</div>
+                    <div class="card-title">
+                      <h3>Diálogo Interreligioso</h3>
+                      <span class="card-year">Desde 1977</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    El movimiento abraza a personas de todas las religiones en la búsqueda de la fraternidad universal...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Desde 1977, el movimiento se abre oficialmente al diálogo con otras religiones, reconociendo que el amor a Dios y al prójimo es patrimonio de toda la humanidad.</p>
+                    
+                    <h4>Religiones y tradiciones presentes:</h4>
+                    <ul>
+                      <li><strong>Cristianismo:</strong> Católicos, Ortodoxos, Protestantes, Anglicanos</li>
+                      <li><strong>Islam:</strong> Sunitas y chiitas de diversos países</li>
+                      <li><strong>Judaísmo:</strong> Ortodoxos, conservadores y reformistas</li>
+                      <li><strong>Hinduismo:</strong> Diferentes escuelas y tradiciones</li>
+                      <li><strong>Budismo:</strong> Theravada, Mahayana, Zen</li>
+                      <li><strong>Otras tradiciones:</strong> Sikh, Bahá'í, religiones africanas y americanas</li>
+                    </ul>
+                    
+                    <h4>Principios del diálogo:</h4>
+                    <ul>
+                      <li><strong>Respeto absoluto:</strong> Cada religión es respetada en su integridad</li>
+                      <li><strong>Búsqueda común:</strong> Todos buscan la verdad y el bien</li>
+                      <li><strong>Testimonio de vida:</strong> Se dialoga viviendo los propios valores</li>
+                      <li><strong>Fraternidad práctica:</strong> Trabajar juntos por el bien común</li>
+                    </ul>
+                    
+                    <p>Este diálogo no es solo teórico sino profundamente vivencial: personas de diferentes religiones viven juntas la experiencia de la fraternidad, manteniendo cada una su propia identidad religiosa.</p>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- OBRAS -->
+            <section class="content-section" id="works">
+              <div class="section-header">
+                <h2>🏗️ Las Obras del Movimiento</h2>
+                <p>Iniciativas concretas para transformar la sociedad</p>
+              </div>
+              
+              <div class="cards-grid">
+                
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <div class="card-title">
+                      <h3>Economía de Comunión</h3>
+                      <span class="card-year">Desde 1991</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Un proyecto económico revolucionario donde las empresas comparten sus ganancias para erradicar la pobreza...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Nacida en Brasil en 1991, la Economía de Comunión propone un modelo empresarial basado en el compartir las ganancias en tres partes iguales:</p>
+                    
+                    <h4>División de las ganancias:</h4>
+                    <ul>
+                      <li><strong>Un tercio:</strong> Para ayudar a personas necesitadas</li>
+                      <li><strong>Un tercio:</strong> Para el desarrollo de la empresa</li>
+                      <li><strong>Un tercio:</strong> Para formar personas en la "cultura del dar"</li>
+                    </ul>
+                    
+                    <h4>Principios empresariales:</h4>
+                    <ul>
+                      <li><strong>Relaciones fraternas:</strong> En todos los niveles de la empresa</li>
+                      <li><strong>Transparencia total:</strong> En la gestión y las cuentas</li>
+                      <li><strong>Cuidado del ambiente:</strong> Sostenibilidad ecológica</li>
+                      <li><strong>Formación integral:</strong> Desarrollo de toda la persona</li>
+                      <li><strong>Bien común:</strong> Por encima del beneficio individual</li>
+                    </ul>
+                    
+                    <p>Hoy participan más de 800 empresas en todo el mundo, demostrando que es posible una economía más justa y solidaria. Estas empresas han ayudado a miles de familias a salir de la pobreza y han creado una nueva cultura empresarial.</p>
+                    
+                    <p>La EdC no es solo filantropía, sino un nuevo modelo económico donde la empresa se convierte en comunidad y el beneficio se pone al servicio de todos.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🏙️</div>
+                    <div class="card-title">
+                      <h3>Las Ciudades Piloto</h3>
+                      <span class="card-year">Mundial</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Pequeñas ciudades donde se experimenta la fraternidad universal, creando modelos de convivencia...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Las Ciudades Piloto son pequeños laboratorios de fraternidad donde personas de diferentes religiones, culturas y razas conviven en armonía, experimentando nuevas formas de vida social.</p>
+                    
+                    <h4>Principales Ciudades Piloto:</h4>
+                    <ul>
+                      <li><strong>Loppiano (Italia):</strong> La primera y más grande, con 900 habitantes</li>
+                      <li><strong>Mariápolis Ginetta (Brasil):</strong> En São Paulo, modelo para América Latina</li>
+                      <li><strong>O'Higgins (Argentina):</strong> En los alrededores de Buenos Aires</li>
+                      <li><strong>Fontem (Camerún):</strong> En el corazón de África</li>
+                      <li><strong>Tagaytay (Filipinas):</strong> En Asia, centro de diálogo interreligioso</li>
+                      <li><strong>Mariápolis Piero (Estados Unidos):</strong> En Nueva York</li>
+                    </ul>
+                    
+                    <h4>Características de vida:</h4>
+                    <ul>
+                      <li><strong>Diversidad unida:</strong> Personas de todas las edades, estados de vida y profesiones</li>
+                      <li><strong>Economía solidaria:</strong> Empresas de Economía de Comunión</li>
+                      <li><strong>Educación integral:</strong> Escuelas que forman la persona completa</li>
+                      <li><strong>Cuidado ecológico:</strong> Respeto y cuidado del medio ambiente</li>
+                      <li><strong>Arte y cultura:</strong> Centros de formación artística y cultural</li>
+                    </ul>
+                    
+                    <p>En estas comunidades se experimenta un estilo de vida basado en la fraternidad, la solidaridad y el respeto mutuo. Son como "laboratorios" donde se ensayan nuevas formas de convivencia humana.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🎓</div>
+                    <div class="card-title">
+                      <h3>Escuelas e Universidades</h3>
+                      <span class="card-year">Mundial</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Instituciones educativas que forman personas íntegras con una visión de unidad y fraternidad...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>El movimiento ha dado vida a numerosas instituciones educativas que aplican una pedagogía basada en la unidad y el respeto de la persona.</p>
+                    
+                    <h4>Principales instituciones:</h4>
+                    <ul>
+                      <li><strong>Instituto Universitario Sophia (Italia):</strong> Universidad internacional en Loppiano</li>
+                      <li><strong>Escuela Abeu (Brasil):</strong> Centro educativo integral en São Paulo</li>
+                      <li><strong>Universidad Sophia (Filipinas):</strong> Campus en Tagaytay</li>
+                      <li><strong>Escuelas Primarias y Secundarias:</strong> En todos los continentes</li>
+                      <li><strong>Centros de Formación Profesional:</strong> Para jóvenes en situación de vulnerabilidad</li>
+                    </ul>
+                    
+                    <h4>Metodología educativa:</h4>
+                    <ul>
+                      <li><strong>Educación integral:</strong> Formación de toda la persona</li>
+                      <li><strong>Diálogo intercultural:</strong> Valorización de todas las culturas</li>
+                      <li><strong>Pedagogía del amor:</strong> Cada estudiante es único y valioso</li>
+                      <li><strong>Formación ética:</strong> Valores universales de fraternidad</li>
+                      <li><strong>Excelencia académica:</strong> Alto nivel científico y humanístico</li>
+                    </ul>
+                    
+                    <p>Estas instituciones se caracterizan por crear un ambiente de familia donde estudiantes de diferentes orígenes conviven en armonía, preparándose para ser constructores de un mundo más unido.</p>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- ACTUALIDAD -->
+            <section class="content-section" id="today">
+              <div class="section-header">
+                <h2>🌟 El Movimiento Hoy</h2>
+                <p>Presente en el mundo contemporáneo con nuevos desafíos y esperanzas</p>
+              </div>
+              
+              <div class="cards-grid">
+                
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">
+                      <h3>Cifras Actuales</h3>
+                      <span class="card-year">2024</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    El movimiento hoy está presente en 194 países con millones de personas que viven el ideal de la unidad...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <h4>Presencia mundial:</h4>
+                    <ul>
+                      <li><strong>194 países:</strong> En todos los continentes</li>
+                      <li><strong>2 millones:</strong> De personas directamente involucradas</li>
+                      <li><strong>50.000:</strong> Focolares y comunidades</li>
+                      <li><strong>800:</strong> Empresas de Economía de Comunión</li>
+                      <li><strong>300:</strong> Centros de diálogo interreligioso</li>
+                      <li><strong>100:</strong> Instituciones educativas</li>
+                    </ul>
+                    
+                    <h4>Composición del movimiento:</h4>
+                    <ul>
+                      <li><strong>Familias:</strong> Miles de familias que viven el ideal</li>
+                      <li><strong>Jóvenes Gen:</strong> En universidades y escuelas</li>
+                      <li><strong>Voluntarios:</strong> En obras sociales y humanitarias</li>
+                      <li><strong>Profesionales:</strong> En todos los ámbitos laborales</li>
+                      <li><strong>Consagrados:</strong> Focolarinas, focolarinos y religiosos</li>
+                      <li><strong>Sacerdotes:</strong> Clero diocesano y movimiento</li>
+                    </ul>
+                    
+                    <p>Esta red mundial trabaja silenciosamente por la fraternidad, siendo levadura de unidad en la masa de la humanidad.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🤝</div>
+                    <div class="card-title">
+                      <h3>Proyectos de Paz</h3>
+                      <span class="card-year">Ongoing</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Iniciativas concretas para la reconciliación en zonas de conflicto y la construcción de la paz...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>El movimiento está activamente involucrado en proyectos de construcción de paz en zonas de conflicto alrededor del mundo.</p>
+                    
+                    <h4>Áreas de intervención:</h4>
+                    <ul>
+                      <li><strong>Medio Oriente:</strong> Diálogo cristiano-musulmán-judío</li>
+                      <li><strong>África:</strong> Reconciliación post-conflicto en varios países</li>
+                      <li><strong>América Latina:</strong> Pacificación en zonas de violencia</li>
+                      <li><strong>Asia:</strong> Puentes entre religiones en sociedades plurales</li>
+                      <li><strong>Europa:</strong> Integración de inmigrantes y refugiados</li>
+                    </ul>
+                    
+                    <h4>Metodología de paz:</h4>
+                    <ul>
+                      <li><strong>Encuentro personal:</strong> Persona a persona, corazón a corazón</li>
+                      <li><strong>Diálogo auténtico:</strong> Escuchar antes de hablar</li>
+                      <li><strong>Reconciliación:</strong> Perdón y nueva fraternidad</li>
+                      <li><strong>Proyectos comunes:</strong> Trabajar juntos por el bien común</li>
+                      <li><strong>Testimonio de vida:</strong> Ser ejemplo de unidad</li>
+                    </ul>
+                    
+                    <p>Estos proyectos han contribuido a procesos de paz en varios países, demostrando que la fraternidad es posible incluso en las situaciones más difíciles.</p>
+                  </div>
+                </div>
+
+                <div class="intro-card">
+                  <div class="card-header">
+                    <div class="card-icon">🌱</div>
+                    <div class="card-title">
+                      <h3>Nuevas Generaciones</h3>
+                      <span class="card-year">Futuro</span>
+                    </div>
+                  </div>
+                  <div class="card-description">
+                    Las nuevas generaciones abrazan el ideal de la unidad adaptándolo a los desafíos contemporáneos...
+                  </div>
+                  <button class="expand-btn" onclick="toggleCard(this)">
+                    <span class="btn-text">Leer más</span>
+                    <span class="btn-icon">+</span>
+                  </button>
+                  <div class="card-expanded">
+                    <p>Las nuevas generaciones del movimiento enfrentan los desafíos del siglo XXI con creatividad y pasión, adaptando el carisma de la unidad a los tiempos actuales.</p>
+                    
+                    <h4>Nuevos ámbitos de acción:</h4>
+                    <ul>
+                      <li><strong>Ecología integral:</strong> Cuidado de la casa común</li>
+                      <li><strong>Redes sociales:</strong> Fraternidad en el mundo digital</li>
+                      <li><strong>Economía circular:</strong> Nuevos modelos económicos sostenibles</li>
+                      <li><strong>Arte contemporáneo:</strong> Expresiones artísticas de unidad</li>
+                      <li><strong>Ciencia y fe:</strong> Diálogo entre ciencia y espiritualidad</li>
+                      <li><strong>Derechos humanos:</strong> Defensa de la dignidad de toda persona</li>
+                    </ul>
+                    
+                    <h4>Características de los jóvenes de hoy:</h4>
+                    <ul>
+                      <li><strong>Conciencia global:</strong> Piensan en términos planetarios</li>
+                      <li><strong>Compromiso social:</strong> Activismo por causas justas</li>
+                      <li><strong>Interculturalidad:</strong> Valorización de la diversidad</li>
+                      <li><strong>Creatividad:</strong> Nuevas formas de expresar el ideal</li>
+                      <li><strong>Esperanza activa:</strong> Construcción del futuro</li>
+                    </ul>
+                    
+                    <p>Estos jóvenes son la esperanza del movimiento y del mundo, portadores de un mensaje de unidad que puede transformar la humanidad.</p>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+
+          </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth-universal.js"></script>
+    <script src="introduccion.js"></script>
+</body>
+</html>

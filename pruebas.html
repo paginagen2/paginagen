@@ -1,0 +1,140 @@
+<script>
+// 🔥 CONFIGURACIÓN FIREBASE - Coloca esto en tu HTML
+console.log('🚀 Iniciando configuración Firebase...');
+
+// 1️⃣ DEFINIR CONFIGURACIÓN (reemplaza con tus datos reales)
+const firebaseConfig = {
+  apiKey: "AIzaSyB7US5r--cM82usyzLqd-ckamgIdyewfKE",
+  authDomain: "pagina-gen.firebaseapp.com",
+  projectId: "pagina-gen",
+  storageBucket: "pagina-gen.firebasestorage.app",
+  messagingSenderId: "876893109130",
+  appId: "1:876893109130:web:862f79fc7a609e512ee673",
+};
+
+console.log('📝 Configuración cargada:', firebaseConfig);
+
+// 2️⃣ INICIALIZAR FIREBASE DE FORMA CORRECTA
+(async function initializeFirebaseApp() {
+    try {
+        console.log('📦 Importando módulos Firebase...');
+        
+        // Importar Firebase App
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js');
+        console.log('✅ Firebase App importado');
+        
+        // Importar Firestore
+        const { getFirestore } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js');
+        console.log('✅ Firestore importado');
+        
+        // Inicializar aplicación
+        console.log('🔧 Inicializando Firebase App...');
+        const app = initializeApp(firebaseConfig);
+        console.log('✅ Firebase App inicializado:', app.name);
+        
+        // Inicializar Firestore
+        console.log('💾 Inicializando Firestore...');
+        const db = getFirestore(app);
+        console.log('✅ Firestore inicializado');
+        
+        // Exponerlos globalmente para usar en tu app
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+        
+        console.log('🎉 ¡Firebase configurado correctamente!');
+        console.log('🔗 Accede con: window.firebaseApp y window.firebaseDb');
+        
+        // Mostrar confirmación visual
+        if (document.body) {
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #10b981;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-weight: 600;
+            `;
+            successMsg.innerHTML = '🔥 Firebase conectado exitosamente!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => successMsg.remove(), 5000);
+        }
+        
+    } catch (error) {
+        console.error('❌ Error inicializando Firebase:', error);
+        
+        // Mostrar error visual
+        if (document.body) {
+            const errorMsg = document.createElement('div');
+            errorMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #ef4444;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-weight: 600;
+                max-width: 400px;
+            `;
+            errorMsg.innerHTML = `❌ Error Firebase: ${error.message}`;
+            document.body.appendChild(errorMsg);
+            
+            setTimeout(() => errorMsg.remove(), 10000);
+        }
+    }
+})();
+
+// 3️⃣ FUNCIONES AUXILIARES PARA TU APP MUSICAL
+// Ejemplo: Guardar un acorde
+window.guardarAcorde = async function(nombre, digitacion) {
+    try {
+        const { collection, addDoc } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js');
+        
+        const docRef = await addDoc(collection(window.firebaseDb, 'acordes'), {
+            nombre: nombre,
+            digitacion: digitacion,
+            fechaCreacion: new Date(),
+            usuario: 'anonimo' // o el usuario actual
+        });
+        
+        console.log('🎸 Acorde guardado:', docRef.id);
+        return docRef.id;
+    } catch (error) {
+        console.error('❌ Error guardando acorde:', error);
+        throw error;
+    }
+};
+
+// Ejemplo: Obtener acordes
+window.obtenerAcordes = async function() {
+    try {
+        const { collection, getDocs } = await import('https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js');
+        
+        const querySnapshot = await getDocs(collection(window.firebaseDb, 'acordes'));
+        const acordes = [];
+        
+        querySnapshot.forEach((doc) => {
+            acordes.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+        
+        console.log('🎵 Acordes obtenidos:', acordes.length);
+        return acordes;
+    } catch (error) {
+        console.error('❌ Error obteniendo acordes:', error);
+        return [];
+    }
+};
+
+console.log('🎸 Funciones de Firebase listas para usar: guardarAcorde() y obtenerAcordes()');
+</script>

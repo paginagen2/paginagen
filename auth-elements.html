@@ -1,0 +1,63 @@
+<!-- Scripts Firebase (agregar al <head> de cada página) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<!-- Sección de usuario para sidebar (agregar después de <div class="sidebar">) -->
+<div class="sidebar-user" id="sidebarUser">
+  <div class="user-info" id="userInfo" style="display: none;">
+    <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+    <span id="userName" class="user-name"></span>
+  </div>
+  <button id="loginBtn" class="login-btn">
+    <span class="login-icon">👤</span>
+    <span class="login-text">Iniciar sesión</span>
+  </button>
+</div>
+
+<!-- Modal de autenticación (agregar antes de </body>) -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-content">
+    <div class="auth-header">
+      <h3 id="authTitle">Iniciar Sesión</h3>
+      <button class="auth-close" onclick="closeAuthModal()">&times;</button>
+    </div>
+    
+    <div class="auth-body">
+      <!-- Login con Google -->
+      <button class="google-signin-btn" onclick="signInWithGoogle()">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+        Continuar con Google
+      </button>
+      
+      <div class="auth-divider">
+        <span>o</span>
+      </div>
+      
+      <!-- Formulario Email/Contraseña -->
+      <form id="authForm">
+        <div class="form-group">
+          <input type="email" id="authEmail" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="authPassword" placeholder="Contraseña" required>
+        </div>
+        
+        <!-- Solo para registro -->
+        <div class="form-group" id="nameGroup" style="display: none;">
+          <input type="text" id="authName" placeholder="Nombre completo">
+        </div>
+        
+        <button type="submit" class="auth-submit" id="authSubmit">Iniciar Sesión</button>
+      </form>
+      
+      <div class="auth-switch">
+        <span id="authSwitchText">¿No tienes cuenta?</span>
+        <button class="auth-switch-btn" id="authSwitchBtn" onclick="toggleAuthMode()">Regístrate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script auth universal (agregar antes de </body>) -->
+<script src="auth-universal.js"></script>

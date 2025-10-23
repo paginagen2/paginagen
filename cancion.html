@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Canción - Cancionero Gen</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cancion.css">
+  <link rel="icon" href="casa.ico">
+</head>
+<body>
+  <!-- Header mejorado -->
+  <header class="cancion-header">
+    <div class="header-content">
+      <a href="cancionero.html" class="back-btn">
+        ← Cancionero
+      </a>
+      
+      <div class="song-info">
+        <h2 id="headerTitulo">Cargando...</h2>
+        <span id="headerArtista" class="artista-link" onclick="abrirArtista()">-</span>
+      </div>
+      
+      <div class="header-actions">
+        <button class="action-btn" onclick="cambiarTono(-1)" title="Bajar tono">
+          🎵 -
+        </button>
+        <button class="action-btn" onclick="cambiarTono(1)" title="Subir tono">
+          🎵 +
+        </button>
+        
+        <div class="separator"></div>
+        
+        <button class="action-btn" onclick="cambiarVelocidad(-1)" title="Más lento">
+          🐌 -
+        </button>
+        <button class="action-btn" onclick="cambiarVelocidad(1)" title="Más rápido">
+          🐰 +
+        </button>
+        
+        <div class="separator"></div>
+        
+        <button class="action-btn" onclick="toggleAutoScroll()" id="btnAutoScroll" title="Auto-scroll">
+          📜 Play
+        </button>
+        <button class="action-btn" onclick="resetearConfiguracion()" title="Resetear">
+          ↻ Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+    <div class="sidebar">
+      <a href="index.html" class="menu-item">
+        <img src="casa.svg" alt="Inicio" class="menu-icon">
+        <span class="menu-text">Inicio</span>
+      </a>
+      <a href="cancionero.html" class="menu-item active">
+        <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+        <span class="menu-text">Cancionero</span>
+      </a>
+      <a href="gen-animadores.html" class="menu-item">
+        <img src="vida.svg" alt="Gen Animadores" class="menu-icon">
+        <span class="menu-text">Gen Animadores</span>
+      </a>
+      <a href="biblioteca.html" class="menu-item">
+        <img src="libros.svg" alt="Biblioteca" class="menu-icon">
+        <span class="menu-text">Biblioteca</span>
+      </a>
+      <a href="introduccion.html" class="menu-item">
+        <img src="libro.svg" alt="Sobre el Movimiento" class="menu-icon">
+        <span class="menu-text">Sobre el Movimiento</span>
+      </a>
+    </div>
+
+
+  <!-- Contenido principal -->
+  <main class="cancion-main">
+    
+    <!-- Información compacta -->
+    <section class="cancion-info-compact">
+      <div class="info-row">
+        <div class="info-item">
+          📂 <span id="cancionCategoria">-</span>
+        </div>
+        <div class="info-item">
+          🎵 <span id="cancionGenero">-</span>
+        </div>
+        <div class="info-item">
+          👁️ <span id="cancionVistas">0</span> vistas
+        </div>
+        <div class="info-item">
+          🎸 Tono: <span id="tonoActual">Original</span>
+        </div>
+        <div class="info-item">
+          ⚡ Velocidad: <span id="velocidadActual">Normal</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Letra con acordes -->
+    <section class="letra-section">
+      <div class="letra-container">
+        <div class="letra-content" id="letraContent">
+          <div class="loading-letra">
+            <div class="loading-spinner"></div>
+            <p>Cargando letra...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { DatabaseService } from './firebase-config-cancionero.js';
+
+    // Variables globales
+    let cancionActual = null;
+    let tonoActual = 0;
+    let velocidadScroll = 2; // 1=muy lento, 10=muy rápido
+    let autoScrollActivo = false;
+    let scrollAnimationId = null;
+    let scrollPosition = 0;
+
+    // Mapeo de acordes
+    const acordesCromaticos = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const cancionId = urlParams.get('id');
+      
+      console.log('🎵 ID recibido:', cancionId);
+      
+      if (cancionId) {
+        cargarCancion(cancionId);
+      } else {
+        mostrarError();
+      }
+    });
+
+    // Cargar canción
+    async function cargarCancion(id) {
+      try {
+        const canciones = await DatabaseService.getCanciones();
+        cancionActual = canciones.find(c => c.id === id);
+        
+        if (cancionActual) {
+          mostrarCancion();
+          await DatabaseService.incrementarReproducciones(id);
+        } else {
+          mostrarError();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        mostrarError();
+      }
+    }
+
+    // Mostrar canción
+    function mostrarCancion() {
+      document.title = `${cancionActual.titulo} - Cancionero Gen`;
+      
+      // Header info
+      document.getElementById('headerTitulo').textContent = cancionActual.titulo;
+      document.getElementById('headerArtista').textContent = cancionActual.artista || 'Desconocido';
+      
+      // Info compacta
+      document.getElementById('cancionCategoria').textContent = getCategoriaTexto(cancionActual.categoria);
+      document.getElementById('cancionGenero').textContent = getCategoriaTexto(cancionActual.genero || 'tradicional');
+      document.getElementById('cancionVistas').textContent = (cancionActual.reproducciones || 0) + 1;
+      
+      mostrarLetraConAcordes();
+    }
+
+    // Mostrar letra
+    function mostrarLetraConAcordes() {
+      const container = document.getElementById('letraContent');
+      let letra = cancionActual.letra;
+      
+      if (tonoActual !== 0) {
+        letra = transponerLetra(letra, tonoActual);
+      }
+      
+      const letraFormateada = letra.replace(/\[([^\]]+)\]/g, '<span class="acorde-compacto">$1</span>');
+      container.innerHTML = letraFormateada;
+      
+      // Actualizar displays
+      const tonos = ['+6', '+5', '+4', '+3', '+2', '+1', 'Original', '-1', '-2', '-3', '-4', '-5', '-6'];
+      document.getElementById('tonoActual').textContent = tonos[tonoActual + 6];
+      
+      const velocidades = ['Muy lento', 'Lento', 'Lento+', 'Normal-', 'Normal', 'Normal+', 'Rápido-', 'Rápido', 'Rápido+', 'Muy rápido'];
+      document.getElementById('velocidadActual').textContent = velocidades[velocidadScroll - 1];
+    }
+
+    function transponerLetra(letra, semitonos) {
+      return letra.replace(/\[([^\]]+)\]/g, (match, acorde) => {
+        return `[${transponerAcorde(acorde, semitonos)}]`;
+      });
+    }
+
+    function transponerAcorde(acorde, semitonos) {
+      const acordeBase = acorde.match(/^([A-G][#b]?)/);
+      if (!acordeBase) return acorde;
+      
+      const nota = acordeBase[1].replace('b', '#');
+      const sufijo = acorde.replace(acordeBase[1], '');
+      
+      const indiceActual = acordesCromaticos.indexOf(nota);
+      if (indiceActual === -1) return acorde;
+      
+      const nuevoIndice = (indiceActual + semitonos + 12) % 12;
+      return acordesCromaticos[nuevoIndice] + sufijo;
+    }
+
+    function getCategoriaTexto(categoria) {
+      const categorias = {
+        'misa': '⛪ Misa', 'gen': '❤️ Gen', 'fogon': '🔥 Fogón',
+        'tradicional': '🎼 Tradicional', 'contemporaneo': '🎤 Contemporáneo',
+        'folk': '🪕 Folk', 'juvenil': '🎸 Juvenil', 'liturgico': '⛪ Litúrgico',
+        'adoracion': '🙏 Adoración', 'alabanza': '✨ Alabanza', 
+        'infantil': '👶 Infantil', 'navidad': '🎄 Navidad', 'pascua': '🐣 Pascua'
+      };
+      return categorias[categoria] || categoria;
+    }
+
+    function mostrarError() {
+      document.getElementById('letraContent').innerHTML = `
+        <div style="text-align: center; padding: 4rem;">
+          <div style="font-size: 4rem; margin-bottom: 2rem;">❌</div>
+          <h2>Canción no encontrada</h2>
+          <a href="cancionero.html" style="
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2rem;
+          ">← Volver al cancionero</a>
+        </div>
+      `;
+      
+      document.getElementById('headerTitulo').textContent = 'Canción no encontrada';
+      document.getElementById('headerArtista').textContent = '-';
+    }
+
+    // Funciones globales
+    window.cambiarTono = function(direccion) {
+      tonoActual += direccion;
+      if (tonoActual > 6) tonoActual = 6;
+      if (tonoActual < -6) tonoActual = -6;
+      mostrarLetraConAcordes();
+    };
+
+    window.cambiarVelocidad = function(direccion) {
+      velocidadScroll += direccion;
+      if (velocidadScroll > 10) velocidadScroll = 10;
+      if (velocidadScroll < 1) velocidadScroll = 1;
+      mostrarLetraConAcordes();
+      
+      // Si está en auto-scroll, reiniciar con nueva velocidad
+      if (autoScrollActivo) {
+        detenerAutoScroll();
+        setTimeout(iniciarAutoScroll, 100);
+      }
+    };
+
+    window.toggleAutoScroll = function() {
+      if (autoScrollActivo) {
+        detenerAutoScroll();
+      } else {
+        iniciarAutoScroll();
+      }
+    };
+
+    function iniciarAutoScroll() {
+      if (!cancionActual) return;
+      
+      autoScrollActivo = true;
+      scrollPosition = window.scrollY;
+      
+      const btn = document.getElementById('btnAutoScroll');
+      btn.textContent = '⏸️ Pause';
+      btn.classList.add('active');
+      
+      // Auto-scroll suave sin volver arriba
+      function scroll() {
+        if (autoScrollActivo) {
+          scrollPosition += velocidadScroll * 0.1;
+          window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+          scrollAnimationId = requestAnimationFrame(scroll);
+        }
+      }
+      scroll();
+    }
+
+    function detenerAutoScroll() {
+      autoScrollActivo = false;
+      
+      if (scrollAnimationId) {
+        cancelAnimationFrame(scrollAnimationId);
+        scrollAnimationId = null;
+      }
+      
+      const btn = document.getElementById('btnAutoScroll');
+      btn.textContent = '📜 Play';
+      btn.classList.remove('active');
+    }
+
+    window.resetearConfiguracion = function() {
+      tonoActual = 0;
+      velocidadScroll = 5;
+      
+      detenerAutoScroll();
+      mostrarLetraConAcordes();
+      
+      // Volver arriba suavemente
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollPosition = 0;
+    };
+
+    window.imprimirCancion = function() {
+      window.print();
+    };
+
+    window.abrirArtista = function() {
+      if (cancionActual && cancionActual.artista) {
+        window.open(`artista.html?nombre=${encodeURIComponent(cancionActual.artista)}`, '_blank');
+      }
+    };
+  </script>
+</body>
+</html>

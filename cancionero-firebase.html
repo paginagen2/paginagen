@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancionero Gen</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    .main {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+      margin: 0;
+      opacity: 0.9;
+    }
+    
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .action-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .action-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(93, 92, 222, 0.2);
+      border-color: var(--primary-color);
+    }
+    
+    .action-card.primary {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .action-card.primary:hover {
+      background: #4a49c7;
+    }
+    
+    .action-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .action-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .action-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .status-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .status {
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .status.success {
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid #4caf50;
+      color: #4caf50;
+    }
+    
+    .status.error {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid #ff6b6b;
+      color: #ff6b6b;
+    }
+    
+    .status.loading {
+      background: rgba(0, 195, 255, 0.1);
+      border: 1px solid #00c3ff;
+      color: #00c3ff;
+    }
+    
+    .canciones-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    
+    .section-header {
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0;
+    }
+    
+    .add-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .add-btn:hover {
+      background: #4a49c7;
+      transform: translateY(-2px);
+    }
+    
+    .canciones-container {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    
+    .cancion-item {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      position: relative;
+    }
+    
+    .cancion-item:hover {
+      background: rgba(93, 92, 222, 0.05);
+    }
+    
+    .cancion-item:last-child {
+      border-bottom: none;
+    }
+    
+    .cancion-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: var(--primary-color);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .cancion-item:hover::before {
+      transform: scaleY(1);
+    }
+    
+    .cancion-titulo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .cancion-meta {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .empty-message {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+    }
+    
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    .form-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    
+    .form-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .form-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    
+    .close-btn:hover {
+      background: var(--border-color);
+      color: var(--text-light);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+    }
+    
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #4a49c7;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: var(--border-color);
+      color: var(--text-light);
+    }
+    
+    .btn-secondary:hover {
+      background: #555;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .modal-meta {
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .letra-acordes {
+      font-family: 'Courier New', monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border: 1px solid var(--border-color);
+    }
+    
+    .acorde {
+      background: var(--primary-color);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-right: 6px;
+      font-size: 0.9em;
+    }
+    
+    /* Responsive fixes */
+    @media (max-width: 768px) {
+      .main {
+        padding: 0.5rem;
+      }
+      
+      .hero {
+        padding: 1.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .cancion-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .form-container {
+        margin: 0;
+        max-height: 95vh;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="index.html" class="menu-item">
+      <img src="casa.svg" alt="Inicio" class="menu-icon">
+      <span class="menu-text">Inicio</span>
+    </a>
+    <a href="palabra.html" class="menu-item">
+      <img src="calendario.svg" alt="Palabra de Vida" class="menu-icon">
+      <span class="menu-text">Palabra de Vida</span>
+    </a>
+    <a href="pasapalabra.html" class="menu-item">
+      <img src="diario.svg" alt="Pasapalabra" class="menu-icon">
+      <span class="menu-text">Pasapalabra</span>
+    </a>
+    <a href="experiencias.html" class="menu-item">
+      <img src="vida.svg" alt="Experiencias" class="menu-icon">
+      <span class="menu-text">Experiencias Vividas</span>
+    </a>
+    <a href="cancionero.html" class="menu-item active">
+      <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+      <span class="menu-text">Cancionero</span>
+    </a>
+    <a href="links.html" class="menu-item">
+      <img src="mundo.svg" alt="Links" class="menu-icon">
+      <span class="menu-text">Links</span>
+    </a>
+    <a href="introduccion.html" class="menu-item">
+      <img src="libro.svg" alt="Introducción" class="menu-icon">
+      <span class="menu-text">Introducción al Movimiento</span>
+    </a>
+    <a href="biblioteca.html" class="menu-item">
+      <img src="libros.svg" alt="Biblioteca" class="menu-icon">
+      <span class="menu-text">Biblioteca</span>
+    </a>
+  </div>
+
+  <!-- Contenido principal -->
+  <main class="main">
+    <!-- Hero -->
+    <section class="hero">
+      <h1>🎸 Cancionero Gen</h1>
+      <p>Canciones en tiempo real para misa, fogón y encuentros</p>
+    </section>
+
+    <!-- Acciones rápidas -->
+    <section class="quick-actions">
+      <div class="action-card primary" onclick="mostrarFormulario()">
+        <div class="action-icon">➕</div>
+        <div class="action-title">Agregar Canción</div>
+        <div class="action-desc">Añade una nueva canción al cancionero</div>
+      </div>
+      
+      <div class="action-card" onclick="cargarCanciones()">
+        <div class="action-icon">🔄</div>
+        <div class="action-title">Recargar</div>
+        <div class="action-desc">Actualizar lista de canciones</div>
+      </div>
+      
+      <div class="action-card" onclick="probarConexionFirebase()">
+        <div class="action-icon">🔍</div>
+        <div class="action-title">Probar Conexión</div>
+        <div class="action-desc">Verificar estado de Firebase</div>
+      </div>
+    </section>
+
+    <!-- Estado -->
+    <section class="status-section">
+      <div id="status" class="status loading">
+        📡 Conectando a Firebase...
+      </div>
+    </section>
+
+    <!-- Lista de canciones -->
+    <section class="canciones-section">
+      <div class="section-header">
+        <h2 class="section-title">📚 Canciones (Total: <span id="totalCanciones">0</span>)</h2>
+        <button class="add-btn" onclick="mostrarFormulario()">
+          <span>➕</span>
+          Nueva Canción
+        </button>
+      </div>
+      
+      <div class="canciones-container" id="cancionesContainer">
+        <div class="empty-message">
+          <div class="empty-icon">🎵</div>
+          <p>Cargando canciones...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Overlay del formulario -->
+  <div class="form-overlay" id="formOverlay">
+    <div class="form-container">
+      <div class="form-header">
+        <h2 class="form-title">🎵 Agregar Nueva Canción</h2>
+        <button class="close-btn" onclick="ocultarFormulario()">✕</button>
+      </div>
+      
+      <form id="formCancion">
+        <div class="form-group">
+          <label for="titulo">Título de la canción *</label>
+          <input type="text" id="titulo" required placeholder="Ej: Alabaré, Como tú...">
+        </div>
+        
+        <div class="form-group">
+          <label for="artista">Artista/Compositor</label>
+          <input type="text" id="artista" placeholder="Ej: Tradicional, Gen, Chiara Lubich...">
+        </div>
+        
+        <div class="form-group">
+          <label for="categoria">Categoría *</label>
+          <select id="categoria" required>
+            <option value="">Seleccionar categoría...</option>
+            <option value="misa">⛪ Misa</option>
+            <option value="gen">❤️ Gen</option>
+            <option value="fogon">🔥 Fogón</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="letra">Letra con acordes *</label>
+          <textarea id="letra" required rows="8" placeholder="Ejemplo:&#10;[C]Alabaré, alabaré&#10;[G]Alabaré a mi Señor&#10;[Am]Todos unidos [F]alegres&#10;[C]Alabemos al Señor"></textarea>
+          <small style="color: var(--text-muted); font-size: 0.8rem;">
+            💡 Usa corchetes para los acordes: [C], [G], [Am], [F], etc.
+          </small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">
+            💾 Guardar Canción
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para ver canción -->
+  <div class="modal" id="modalCancion">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitulo">Título</h2>
+        <p class="modal-meta" id="modalMeta">Información</p>
+      </div>
+      <div class="letra-acordes" id="modalLetra"></div>
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script principal -->
+  <script type="module">
+    import { DatabaseService, probarConexion } from './firebase-config.js';
+
+    let canciones = [];
+    let unsubscribe = null;
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', async function() {
+      await inicializar();
+    });
+
+    async function inicializar() {
+      try {
+        mostrarStatus('📡 Conectando a Firebase...', 'loading');
+        
+        const conexionExitosa = await probarConexion();
+        
+        if (conexionExitosa) {
+          mostrarStatus('✅ Conectado a Firebase correctamente', 'success');
+          
+          // Listener en tiempo real
+          unsubscribe = DatabaseService.onCancionesChange((cancionesActualizadas) => {
+            canciones = cancionesActualizadas;
+            renderizarCanciones();
+            mostrarStatus(`🔄 ${canciones.length} canciones cargadas`, 'success');
+          });
+          
+        } else {
+          mostrarStatus('❌ Error conectando a Firebase', 'error');
+        }
+        
+      } catch (error) {
+        console.error('Error:', error);
+        mostrarStatus(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    function renderizarCanciones() {
+      const container = document.getElementById('cancionesContainer');
+      document.getElementById('totalCanciones').textContent = canciones.length;
+      
+      if (canciones.length === 0) {
+        container.innerHTML = `
+          <div class="empty-message">
+            <div class="empty-icon">🎸</div>
+            <p>No hay canciones aún. ¡Sé el primero en agregar una!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = '';
+      
+      canciones.forEach(cancion => {
+        const item = document.createElement('div');
+        item.className = 'cancion-item';
+        item.onclick = () => verCancion(cancion);
+        
+        item.innerHTML = `
+          <h3 class="cancion-titulo">${cancion.titulo}</h3>
+          <div class="cancion-meta">
+            <span>👤 ${cancion.artista || 'Desconocido'}</span>
+            <span>📂 ${getCategoriaTexto(cancion.categoria)}</span>
+            <span>👁️ ${cancion.reproducciones || 0} vistas</span>
+          </div>
+        `;
+        
+        container.appendChild(item);
+      });
+    }
+
+    function getCategoriaTexto(categoria) {
+      const categorias = {
+        'misa': '⛪ Misa',
+        'gen': '❤️ Gen', 
+        'fogon': '🔥 Fogón'
+      };
+      return categorias[categoria] || categoria;
+    }
+
+    function mostrarStatus(mensaje, tipo) {
+      const status = document.getElementById('status');
+      status.textContent = mensaje;
+      status.className = `status ${tipo}`;
+    }
+
+    // Funciones globales
+    window.probarConexionFirebase = async function() {
+      try {
+        mostrarStatus('🔍 Probando conexión...', 'loading');
+        const resultado = await probarConexion();
+        mostrarStatus(resultado ? '✅ Conexión exitosa' : '❌ Error de conexión', resultado ? 'success' : 'error');
+      } catch (error) {
+        mostrarStatus(`❌ Error: ${error.message}`, 'error');
+      }
+    };
+
+    window.cargarCanciones = async function() {
+      try {
+        mostrarStatus('🔄 Recargando...', 'loading');
+        canciones = await DatabaseService.getCanciones();
+        renderizarCanciones();
+        mostrarStatus(`✅ ${canciones.length} canciones cargadas`, 'success');
+      } catch (error) {
+        mostrarStatus(`❌ Error: ${error.message}`, 'error');
+      }
+    };
+
+    window.mostrarFormulario = function() {
+      document.getElementById('formOverlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.ocultarFormulario = function() {
+      document.getElementById('formOverlay').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.getElementById('formCancion').reset();
+    };
+
+    // Formulario
+    document.getElementById('formCancion').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      try {
+        mostrarStatus('💾 Guardando...', 'loading');
+        
+        const cancionData = {
+          titulo: document.getElementById('titulo').value.trim(),
+          artista: document.getElementById('artista').value.trim(),
+          categoria: document.getElementById('categoria').value,
+          letra: document.getElementById('letra').value.trim()
+        };
+
+        await DatabaseService.agregarCancion(cancionData);
+        
+        mostrarStatus('✅ Canción guardada', 'success');
+        ocultarFormulario();
+        
+      } catch (error) {
+        mostrarStatus(`❌ Error: ${error.message}`, 'error');
+      }
+    });
+
+    // Ver canción
+    window.verCancion = async function(cancion) {
+      try {
+        await DatabaseService.incrementarReproducciones(cancion.id);
+        
+        document.getElementById('modalTitulo').textContent = cancion.titulo;
+        document.getElementById('modalMeta').textContent = 
+          `${cancion.artista || 'Desconocido'} • ${getCategoriaTexto(cancion.categoria)}`;
+        
+        const letraFormateada = cancion.letra.replace(/\[([^\]]+)\]/g, '<span class="acorde">$1</span>');
+        document.getElementById('modalLetra').innerHTML = letraFormateada;
+        
+        document.getElementById('modalCancion').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+      } catch (error) {
+        mostrarStatus(`❌ Error: ${error.message}`, 'error');
+      }
+    };
+
+    window.cerrarModal = function() {
+      document.getElementById('modalCancion').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    };
+
+    // Cerrar modal con click en backdrop
+    document.getElementById('modalCancion').addEventListener('click', function(e) {
+      if (e.target === this) cerrarModal();
+    });
+
+    document.getElementById('formOverlay').addEventListener('click', function(e) {
+      if (e.target === this) ocultarFormulario();
+    });
+
+    // Cleanup
+    window.addEventListener('beforeunload', () => {
+      if (unsubscribe) unsubscribe();
+    });
+  </script>
+</body>
+</html>

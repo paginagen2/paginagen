@@ -1,0 +1,486 @@
+/* ===================================
+   INTRODUCCIÓN AL MOVIMIENTO - DISEÑO FORMAL
+   =================================== */
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    --secondary-gradient: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    --accent-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --formal-blue: #1e40af;
+    --formal-gray: #374151;
+    --formal-green: #059669;
+    --formal-gold: #d97706;
+    --primary-color: #2563eb;
+}
+
+.intro-container {
+    max-width: 1400px;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.7;
+    width: 100%;
+}
+
+/* ===================================
+   HERO HEADER FORMAL
+   =================================== */
+.hero-header {
+    background: var(--primary-gradient);
+    border-radius: 16px;
+    padding: 4rem 3rem;
+    margin-bottom: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(30, 64, 175, 0.2);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+    font-family: 'Georgia', serif;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.hero-decoration {
+    display: none; /* Quitar elementos infantiles */
+}
+
+/* ===================================
+   NAVEGACIÓN DE CONTENIDO
+   =================================== */
+.content-navigation {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.nav-description p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    font-style: italic;
+}
+
+/* ===================================
+   SECCIONES DE CONTENIDO
+   =================================== */
+.content-section {
+    margin-bottom: 5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-family: 'Georgia', serif;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    font-style: italic;
+}
+
+/* ===================================
+   GRID DE TARJETAS FORMAL
+   =================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.intro-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.intro-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border-color: var(--formal-blue);
+}
+
+.intro-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* ===================================
+   IMAGEN DE TARJETA
+   =================================== */
+.card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    background: var(--secondary-gradient);
+}
+
+.card-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(30, 64, 175, 0.8) 0%, 
+        rgba(37, 99, 235, 0.8) 50%, 
+        rgba(5, 150, 105, 0.8) 100%);
+    z-index: 2;
+}
+
+.card-image::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    z-index: 3;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    width: 90%;
+}
+
+.card-image[data-title*="1943"]::after { content: "🏛️ Trento, Italia - 1943"; }
+.card-image[data-title*="Compañeras"]::after { content: "👥 Las Primeras Focolarinas"; }
+.card-image[data-title*="Focolare"]::after { content: "🏠 Via Caprera, Trento"; }
+.card-image[data-title*="Arcoíris"]::after { content: "🌈 Generación Nueva"; }
+.card-image[data-title*="Iglesia"]::after { content: "⛪ Vaticano - 1962"; }
+.card-image[data-title*="Internacional"]::after { content: "🌍 Expansión Mundial"; }
+.card-image[data-title*="uno"]::after { content: "🙏 Oración de Jesús"; }
+.card-image[data-title*="Abandonado"]::after { content: "✝️ Jesús en la Cruz"; }
+.card-image[data-title*="Interreligioso"]::after { content: "🕊️ Diálogo de Religiones"; }
+.card-image[data-title*="Economía"]::after { content: "💼 Empresas Solidarias"; }
+.card-image[data-title*="Ciudades"]::after { content: "🏘️ Mariápolis"; }
+.card-image[data-title*="Escuelas"]::after { content: "🎓 Educación Integral"; }
+.card-image[data-title*="Cifras"]::after { content: "📊 194 Países"; }
+.card-image[data-title*="Paz"]::after { content: "🤝 Construcción de Paz"; }
+.card-image[data-title*="Nuevas"]::after { content: "🌱 Jóvenes del Futuro"; }
+
+/* ===================================
+   CONTENIDO DE TARJETA
+   =================================== */
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 2rem 1rem;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-gradient);
+    border-radius: 12px;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+}
+
+.card-title {
+    flex: 1;
+}
+
+.card-title h3 {
+    color: var(--text-light);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+    font-family: 'Georgia', serif;
+}
+
+.card-year {
+    background: var(--accent-gradient);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.card-description {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.expand-btn {
+    margin: 0 2rem 2rem;
+    background: var(--secondary-gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    width: calc(100% - 4rem);
+    border: 1px solid var(--border-color);
+}
+
+.expand-btn:hover {
+    background: var(--primary-gradient);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.expand-btn.expanded .btn-icon {
+    transform: rotate(45deg);
+}
+
+/* ===================================
+   CONTENIDO EXPANDIDO
+   =================================== */
+.card-expanded {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.02), rgba(55, 65, 81, 0.02));
+    border-top: 1px solid var(--border-color);
+}
+
+.card-expanded.expanded {
+    max-height: 1500px;
+    padding: 2rem;
+}
+
+.card-expanded p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    text-align: justify;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.card-expanded h4 {
+    color: var(--formal-blue);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--formal-blue);
+    font-family: 'Georgia', serif;
+}
+
+.card-expanded ul {
+    color: var(--text-muted);
+    margin-left: 0;
+    margin-bottom: 2rem;
+    list-style: none;
+}
+
+.card-expanded li {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.card-expanded li::before {
+    content: '▪';
+    color: var(--formal-blue);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.card-expanded li strong {
+    color: var(--formal-blue);
+    font-weight: 600;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 1200px) {
+    .intro-container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-header {
+        padding: 3rem 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cards-grid {
+        gap: 2rem;
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+        align-self: center;
+    }
+    
+    .card-image {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-container {
+        padding: 1rem;
+    }
+    
+    .hero-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .card-header {
+        padding: 1.5rem;
+    }
+    
+    .card-expanded.expanded {
+        padding: 1.5rem;
+    }
+    
+    .content-navigation {
+        padding: 1.5rem;
+    }
+}
+
+/* ===================================
+   TIPOGRAFÍA FORMAL
+   =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ===================================
+   ANIMACIONES SUTILES
+   =================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.intro-card:nth-child(1) { animation-delay: 0.1s; }
+.intro-card:nth-child(2) { animation-delay: 0.2s; }
+.intro-card:nth-child(3) { animation-delay: 0.3s; }

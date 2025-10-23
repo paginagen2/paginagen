@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancionero Gen</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cancionero.css">
+  <link rel="icon" href="casa.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+      <a href="index.html" class="menu-item">
+        <img src="casa.svg" alt="Inicio" class="menu-icon">
+        <span class="menu-text">Inicio</span>
+      </a>
+      <a href="cancionero.html" class="menu-item active">
+        <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+        <span class="menu-text">Cancionero</span>
+      </a>
+      <a href="gen-animadores.html" class="menu-item">
+        <img src="vida.svg" alt="Gen Animadores" class="menu-icon">
+        <span class="menu-text">Gen Animadores</span>
+      </a>
+      <a href="biblioteca.html" class="menu-item">
+        <img src="libros.svg" alt="Biblioteca" class="menu-icon">
+        <span class="menu-text">Biblioteca</span>
+      </a>
+      <a href="introduccion.html" class="menu-item">
+        <img src="libro.svg" alt="Sobre el Movimiento" class="menu-icon">
+        <span class="menu-text">Sobre el Movimiento</span>
+      </a>
+    </div>
+
+  <!-- Contenido principal -->
+  <main class="main">
+    <!-- Hero con imagen de fondo -->
+    <section class="hero hero-guitarra">
+      <div class="hero-content">
+        <h1>🎸 Cancionero Gen</h1>
+        <p>Descubre, aprende y comparte las canciones más populares</p>
+      </div>
+    </section>
+
+    <!-- Layout de 2 columnas -->
+    <div class="cancionero-layout">
+      <!-- Columna principal -->
+      <div class="main-column">
+        <!-- Controles simplificados -->
+        <section class="unified-controls">
+          <div class="controls-header">
+            <h2>🔍 Explorar canciones</h2>
+            <div class="header-actions">
+              <button class="add-btn" onclick="mostrarFormulario()">
+                <span>➕</span>
+                Nueva Canción
+              </button>
+            </div>
+          </div>
+          
+          <div class="controls-content">
+            <!-- Búsqueda -->
+            <div class="search-section">
+              <input type="text" id="searchInput" placeholder="🔍 Buscar por título, artista o letra..." class="search-input">
+            </div>
+            
+            <!-- Solo filtros de categoría -->
+            <div class="filters-section">
+              <div class="filter-group">
+                <label>Categoría:</label>
+                <div class="filter-pills">
+                  <button class="filter-pill active" data-categoria="todas">🎶 Todas</button>
+                  <button class="filter-pill" data-categoria="misa">⛪ Misa</button>
+                  <button class="filter-pill" data-categoria="gen">❤️ Gen</button>
+                  <button class="filter-pill" data-categoria="fogon">🔥 Fogón</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Top 5 más populares -->
+        <section class="top-canciones">
+          <div class="section-header">
+            <h2 id="sectionTitle">🏆 Top 5 más populares</h2>
+            <a href="#" class="view-all-link" onclick="mostrarTodas()">Ver todas →</a>
+          </div>
+          
+          <div class="canciones-grid" id="cancionesGrid">
+            <div class="loading-state">
+              <div class="loading-icon">🎵</div>
+              <p>Cargando las mejores canciones...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar derecha -->
+      <aside class="sidebar-right">
+        <!-- Botón de acordes -->
+        <div class="acordes-card">
+          <div class="card-header">
+            <h3>🎼 Centro de Acordes</h3>
+          </div>
+          <div class="card-content">
+            <p>Aprende todos los acordes que necesitas</p>
+            <button class="acordes-btn" onclick="abrirAcordes()">
+              <span>🎸</span>
+              Ver Acordes
+            </button>
+          </div>
+        </div>
+
+        <!-- Top artistas -->
+        <div class="artistas-card">
+          <div class="card-header">
+            <h3>🎤 Top Artistas</h3>
+          </div>
+          <div class="artistas-list" id="artistasList">
+            <div class="loading-text">Cargando artistas...</div>
+          </div>
+        </div>
+
+        <!-- Generador de PDF -->
+        <div class="pdf-card">
+          <div class="card-header">
+            <h3>📄 Cancionero PDF</h3>
+          </div>
+          <div class="card-content">
+            <p>Crea tu cancionero personalizado en PDF</p>
+            <button class="pdf-btn" onclick="activarModoSeleccion()" id="btnActivarPDF">
+              <span>📄</span>
+              Generar Cancionero
+            </button>
+            
+            <!-- Controles cuando está en modo selección -->
+            <div class="pdf-controls" id="pdfControls" style="display: none;">
+              <div class="selection-info">
+                <span id="selectionCount">0</span> canciones seleccionadas
+              </div>
+              <div class="pdf-buttons">
+                <button class="btn-generate-pdf" onclick="generarPDF()">
+                  📄 Crear PDF
+                </button>
+                <button class="btn-cancel-selection" onclick="cancelarSeleccion()">
+                  ❌ Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Área para mostrar canciones de artista -->
+    <div class="artista-section" id="artistaSection" style="display: none;">
+      <div class="artista-header">
+        <h2 id="artistaTitulo">🎤 Artista</h2>
+        <button class="back-to-main" onclick="volverAlMain()">← Volver a canciones principales</button>
+      </div>
+      <div class="canciones-grid" id="cancionesArtista">
+        <!-- Canciones del artista se llenan aquí -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Formulario modal simplificado -->
+  <div class="form-overlay" id="formOverlay">
+    <div class="form-container">
+      <div class="form-header">
+        <h2 class="form-title">🎵 Agregar Nueva Canción</h2>
+        <button class="close-btn" onclick="ocultarFormulario()">✕</button>
+      </div>
+      
+      <div class="form-body">
+        <form id="formCancion">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="titulo">Título de la canción *</label>
+              <input type="text" id="titulo" required placeholder="Ej: Alabaré, Como tú...">
+            </div>
+            
+            <div class="form-group">
+              <label for="artista">Artista/Compositor</label>
+              <input type="text" id="artista" placeholder="Ej: Tradicional, Gen...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="categoria">Categoría *</label>
+            <select id="categoria" required>
+              <option value="">Seleccionar categoría...</option>
+              <option value="misa">⛪ Misa</option>
+              <option value="gen">❤️ Gen</option>
+              <option value="fogon">🔥 Fogón</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="letra">Letra con acordes *</label>
+            <textarea id="letra" required rows="8" placeholder="Ejemplo:&#10;[C]Estrofa ejemplo&#10;[G]Con acordes simples&#10;[Am]Para demostrar [F]formato"></textarea>
+            <div class="form-help">
+              💡 <strong>Tip:</strong> Usa corchetes para los acordes: [C], [G], [Am], [F], etc.
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="ocultarFormulario()">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+              💾 Guardar Canción
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="status-toast" id="statusToast">
+    <div class="toast" id="toast">
+      <span id="toastIcon">ℹ️</span>
+      <span id="toastMessage">Mensaje</span>
+    </div>
+  </div>
+
+  <script type="module">
+    import { DatabaseService, probarConexion } from './firebase-config-cancionero.js';
+
+    // Variables globales
+    let canciones = [];
+    let cancionesFiltradas = [];
+    let unsubscribe = null;
+    let cancionesSeleccionadas = new Set();
+    let mostrandoTodas = false;
+    let modoSeleccion = false;
+    let mostrandoArtista = false;
+    let artistaActual = '';
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🎸 Iniciando Cancionero...');
+      await inicializar();
+      inicializarEventListeners();
+    });
+
+    // Inicializar aplicación
+    async function inicializar() {
+      try {
+        console.log('🔥 Conectando a Firebase...');
+        const conexionExitosa = await probarConexion();
+        
+        if (conexionExitosa) {
+          console.log('✅ Firebase conectado correctamente');
+          mostrarToast('✅ Conectado a Firebase', 'success');
+          
+          unsubscribe = DatabaseService.onCancionesChange((cancionesActualizadas) => {
+            console.log(`📊 Canciones actualizadas: ${cancionesActualizadas.length}`);
+            canciones = cancionesActualizadas;
+            
+            if (mostrandoArtista) {
+              mostrarCancionesArtista(artistaActual);
+            } else {
+              aplicarFiltros();
+            }
+            
+            actualizarTopArtistas();
+          });
+          
+        } else {
+          console.log('❌ Error conectando a Firebase');
+          mostrarToast('❌ Error conectando a Firebase', 'error');
+        }
+        
+      } catch (error) {
+        console.error('💥 Error en inicialización:', error);
+        mostrarToast(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    // Event listeners
+    function inicializarEventListeners() {
+      // Búsqueda en tiempo real
+      document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
+      
+      // Solo filtros de categoría
+      document.querySelectorAll('.filter-pill[data-categoria]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-pill[data-categoria]').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          aplicarFiltros();
+        });
+      });
+
+      // Formulario
+      document.getElementById('formCancion').addEventListener('submit', guardarCancion);
+      
+      // Cerrar modal con Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          ocultarFormulario();
+        }
+      });
+
+      // Cerrar modal con click en backdrop
+      document.getElementById('formOverlay').addEventListener('click', function(e) {
+        if (e.target === this) ocultarFormulario();
+      });
+    }
+
+    // Aplicar filtros (sin género)
+    function aplicarFiltros() {
+      if (mostrandoArtista) return;
+      
+      const busqueda = document.getElementById('searchInput').value.toLowerCase();
+      const categoriaActiva = document.querySelector('.filter-pill[data-categoria].active').dataset.categoria;
+      
+      cancionesFiltradas = canciones.filter(cancion => {
+        const cumpleBusqueda = !busqueda || 
+          cancion.titulo.toLowerCase().includes(busqueda) ||
+          (cancion.artista && cancion.artista.toLowerCase().includes(busqueda)) ||
+          cancion.letra.toLowerCase().includes(busqueda);
+        
+        const cumpleCategoria = categoriaActiva === 'todas' || cancion.categoria === categoriaActiva;
+        
+        return cumpleBusqueda && cumpleCategoria;
+      });
+      
+      // Actualizar título de sección
+      const hayFiltros = busqueda || categoriaActiva !== 'todas';
+      const titulo = document.getElementById('sectionTitle');
+      
+      if (hayFiltros) {
+        titulo.textContent = `🔍 Resultados de búsqueda (${cancionesFiltradas.length})`;
+      } else {
+        titulo.textContent = mostrandoTodas ? '📚 Todas las canciones' : '🏆 Top 5 más populares';
+      }
+      
+      renderizarCanciones();
+    }
+
+    // Renderizar canciones (Top 5)
+    function renderizarCanciones() {
+      const container = document.getElementById('cancionesGrid');
+      container.innerHTML = '';
+      
+      if (cancionesFiltradas.length === 0) {
+        container.innerHTML = `
+          <div class="loading-state">
+            <div class="loading-icon">🔍</div>
+            <p>No se encontraron canciones</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Decidir cuántas mostrar
+      const hayFiltros = document.getElementById('searchInput').value || 
+                        document.querySelector('.filter-pill[data-categoria].active').dataset.categoria !== 'todas';
+      
+      const cancionesAMostrar = (hayFiltros || mostrandoTodas) ? cancionesFiltradas : 
+        cancionesFiltradas.sort((a, b) => (b.reproducciones || 0) - (a.reproducciones || 0)).slice(0, 5);
+      
+      cancionesAMostrar.forEach((cancion, index) => {
+        const card = crearCancionCard(cancion, index + 1);
+        container.appendChild(card);
+      });
+    }
+
+    // Crear card con checkbox mejor posicionado
+    function crearCancionCard(cancion, ranking) {
+      const card = document.createElement('div');
+      card.className = 'cancion-card';
+      if (cancionesSeleccionadas.has(cancion.id)) {
+        card.classList.add('selected');
+      }
+      
+      const previewLetra = cancion.letra
+        .replace(/\[([^\]]+)\]/g, '')
+        .substring(0, 80) + (cancion.letra.length > 80 ? '...' : '');
+      
+      card.innerHTML = `
+        <div class="cancion-content" onclick="abrirCancion('${cancion.id}')">
+          <div class="cancion-header">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span class="ranking-badge">#${ranking}</span>
+                <h3 class="cancion-titulo">${cancion.titulo}</h3>
+              </div>
+              <div class="cancion-meta">
+                <div class="meta-item">
+                  <span>👤</span>
+                  <span class="artista-link" onclick="event.stopPropagation(); abrirArtista('${cancion.artista || 'Desconocido'}')">${cancion.artista || 'Desconocido'}</span>
+                </div>
+                <div class="meta-item">
+                  <span>👁️</span>
+                  <span>${cancion.reproducciones || 0} vistas</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="categoria-with-checkbox">
+              <div class="selection-checkbox ${modoSeleccion ? 'visible' : ''}">
+                <input type="checkbox" class="song-checkbox" data-id="${cancion.id}" 
+                       ${cancionesSeleccionadas.has(cancion.id) ? 'checked' : ''} 
+                       onchange="event.stopPropagation(); toggleSelection('${cancion.id}')">
+              </div>
+              <div class="cancion-categoria">
+                <span>${getCategoriaIcon(cancion.categoria)}</span>
+                <span>${getCategoriaTexto(cancion.categoria)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="cancion-preview">${previewLetra}</div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Top artistas
+    function actualizarTopArtistas() {
+      const artistasMap = new Map();
+      
+      canciones.forEach(cancion => {
+        const artista = cancion.artista || 'Desconocido';
+        if (artistasMap.has(artista)) {
+          artistasMap.set(artista, artistasMap.get(artista) + 1);
+        } else {
+          artistasMap.set(artista, 1);
+        }
+      });
+      
+      const topArtistas = Array.from(artistasMap.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+      
+      const container = document.getElementById('artistasList');
+      
+      if (topArtistas.length === 0) {
+        container.innerHTML = '<div class="loading-text">No hay artistas aún</div>';
+        return;
+      }
+      
+      container.innerHTML = '';
+      
+      topArtistas.forEach(([artista, count], index) => {
+        const item = document.createElement('div');
+        item.className = 'artista-item';
+        
+        item.innerHTML = `
+          <div class="artista-info">
+            <div class="artista-rank">${index + 1}</div>
+            <div class="artista-nombre artista-link" onclick="abrirArtista('${artista}')">${artista}</div>
+          </div>
+          <div class="artista-count">${count} canciones</div>
+        `;
+        
+        container.appendChild(item);
+      });
+    }
+
+    // Sistema de selección para PDF
+    window.activarModoSeleccion = function() {
+      modoSeleccion = true;
+      document.body.classList.add('selection-mode');
+      
+      // Mostrar controles PDF
+      document.getElementById('pdfControls').style.display = 'block';
+      document.getElementById('btnActivarPDF').style.display = 'none';
+      
+      // Re-renderizar para mostrar checkboxes
+      renderizarCanciones();
+      
+      mostrarToast('✅ Modo selección activado. Elige las canciones para tu PDF', 'success');
+    };
+
+    window.cancelarSeleccion = function() {
+      modoSeleccion = false;
+      document.body.classList.remove('selection-mode');
+      cancionesSeleccionadas.clear();
+      
+      // Ocultar controles PDF
+      document.getElementById('pdfControls').style.display = 'none';
+      document.getElementById('btnActivarPDF').style.display = 'flex';
+      
+      // Re-renderizar para ocultar checkboxes
+      renderizarCanciones();
+    };
+
+    window.toggleSelection = function(cancionId) {
+      const checkbox = document.querySelector(`input[data-id="${cancionId}"]`);
+      const card = checkbox.closest('.cancion-card');
+      
+      if (checkbox.checked) {
+        cancionesSeleccionadas.add(cancionId);
+        card.classList.add('selected');
+      } else {
+        cancionesSeleccionadas.delete(cancionId);
+        card.classList.remove('selected');
+      }
+      
+      // Actualizar contador
+      document.getElementById('selectionCount').textContent = cancionesSeleccionadas.size;
+    };
+
+    window.generarPDF = function() {
+      if (cancionesSeleccionadas.size === 0) {
+        mostrarToast('❌ Selecciona al menos una canción', 'error');
+        return;
+      }
+      
+      const cancionesParaPDF = canciones.filter(c => cancionesSeleccionadas.has(c.id))
+        .sort((a, b) => a.titulo.localeCompare(b.titulo));
+      
+      try {
+        // Crear PDF con jsPDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        
+        const margin = 20;
+        let esPrimera = true;
+        
+        cancionesParaPDF.forEach((cancion) => {
+          if (!esPrimera) {
+            pdf.addPage();
+          }
+          esPrimera = false;
+          
+          let yPosition = 20;
+          
+          // Título de la canción
+          pdf.setFontSize(18);
+          pdf.setFont(undefined, 'bold');
+          pdf.text(cancion.titulo.toUpperCase(), margin, yPosition);
+          
+          yPosition += 12;
+          pdf.setFontSize(12);
+          pdf.setFont(undefined, 'normal');
+          
+          // Información de la canción
+          const info = `${cancion.artista || 'Desconocido'} • ${getCategoriaTexto(cancion.categoria)}`;
+          pdf.text(info, margin, yPosition);
+          
+          yPosition += 20;
+          
+          // Letra con acordes
+          pdf.setFont('courier', 'normal');
+          pdf.setFontSize(11);
+          
+          const letra = cancion.letra;
+          const lines = pdf.splitTextToSize(letra, pdf.internal.pageSize.width - 2 * margin);
+          
+          lines.forEach(line => {
+            if (yPosition > pdf.internal.pageSize.height - 30) {
+              pdf.addPage();
+              yPosition = 20;
+            }
+            pdf.text(line, margin, yPosition);
+            yPosition += 6;
+          });
+        });
+        
+        // Descargar PDF
+        pdf.save(`cancionero-gen-${cancionesSeleccionadas.size}-canciones.pdf`);
+        
+        mostrarToast(`📄 PDF generado con ${cancionesSeleccionadas.size} canciones`, 'success');
+        
+        // Limpiar selección
+        cancelarSeleccion();
+        
+      } catch (error) {
+        console.error('Error generando PDF:', error);
+        mostrarToast('❌ Error al generar PDF', 'error');
+      }
+    };
+
+    // Mostrar canciones de un artista específico
+    window.abrirArtista = function(nombreArtista) {
+      artistaActual = nombreArtista;
+      mostrandoArtista = true;
+      
+      // Ocultar sección principal
+      document.querySelector('.cancionero-layout').style.display = 'none';
+      
+      // Mostrar sección de artista
+      const artistaSection = document.getElementById('artistaSection');
+      artistaSection.style.display = 'block';
+      
+      document.getElementById('artistaTitulo').textContent = `🎤 ${nombreArtista}`;
+      
+      mostrarCancionesArtista(nombreArtista);
+    };
+
+    function mostrarCancionesArtista(nombreArtista) {
+      const cancionesArtista = canciones.filter(c => 
+        (c.artista || 'Desconocido') === nombreArtista
+      ).sort((a, b) => (b.reproducciones || 0) - (a.reproducciones || 0));
+      
+      const container = document.getElementById('cancionesArtista');
+      container.innerHTML = '';
+      
+      if (cancionesArtista.length === 0) {
+        container.innerHTML = `
+          <div class="loading-state">
+            <div class="loading-icon">🎤</div>
+            <p>Este artista no tiene canciones</p>
+          </div>
+        `;
+        return;
+      }
+      
+      cancionesArtista.forEach((cancion, index) => {
+        const card = document.createElement('div');
+        card.className = 'cancion-card';
+        card.onclick = () => window.location.href = `cancion.html?id=${cancion.id}`;
+        
+        card.innerHTML = `
+          <div class="cancion-content">
+            <div class="cancion-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                  <span class="ranking-badge">#${index + 1}</span>
+                  <h3 class="cancion-titulo">${cancion.titulo}</h3>
+                </div>
+                <div class="cancion-meta">
+                  <div class="meta-item">
+                    <span>👁️</span>
+                    <span>${cancion.reproducciones || 0} vistas</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cancion-categoria">
+                <span>${getCategoriaIcon(cancion.categoria)}</span>
+                <span>${getCategoriaTexto(cancion.categoria)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    window.volverAlMain = function() {
+      mostrandoArtista = false;
+      artistaActual = '';
+      
+      // Mostrar sección principal
+      document.querySelector('.cancionero-layout').style.display = 'grid';
+      
+      // Ocultar sección de artista
+      document.getElementById('artistaSection').style.display = 'none';
+      
+      // Refrescar vista principal
+      aplicarFiltros();
+    };
+
+    window.mostrarTodas = function() {
+      if (mostrandoArtista) return;
+      
+      mostrandoTodas = !mostrandoTodas;
+      const link = document.querySelector('.view-all-link');
+      link.textContent = mostrandoTodas ? '← Mostrar top 5' : 'Ver todas →';
+      aplicarFiltros();
+    };
+
+    function getCategoriaTexto(valor) {
+      const categorias = {
+        'misa': 'Misa',
+        'gen': 'Gen', 
+        'fogon': 'Fogón'
+      };
+      return categorias[valor] || valor;
+    }
+
+    function getCategoriaIcon(categoria) {
+      const iconos = { 'misa': '⛪', 'gen': '❤️', 'fogon': '🔥' };
+      return iconos[categoria] || '🎵';
+    }
+
+    // Funciones globales
+    window.mostrarFormulario = function() {
+      document.getElementById('formOverlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('titulo').focus(), 100);
+    };
+
+    window.ocultarFormulario = function() {
+      document.getElementById('formOverlay').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.getElementById('formCancion').reset();
+    };
+
+    window.abrirCancion = function(id) {
+      if (!modoSeleccion) {
+        window.location.href = `cancion.html?id=${id}`;
+      }
+    };
+
+    window.abrirAcordes = function() {
+      window.location.href = 'acordes.html';
+    };
+
+    // Guardar canción (sin género)
+    async function guardarCancion(e) {
+      e.preventDefault();
+      
+      try {
+        const cancionData = {
+          titulo: document.getElementById('titulo').value.trim(),
+          artista: document.getElementById('artista').value.trim(),
+          categoria: document.getElementById('categoria').value,
+          letra: document.getElementById('letra').value.trim()
+        };
+
+        if (!cancionData.titulo || !cancionData.categoria || !cancionData.letra) {
+          mostrarToast('❌ Completa todos los campos obligatorios', 'error');
+          return;
+        }
+
+        await DatabaseService.agregarCancion(cancionData);
+        
+        mostrarToast('✅ Canción guardada correctamente', 'success');
+        ocultarFormulario();
+        
+      } catch (error) {
+        console.error('❌ Error guardando canción:', error);
+        mostrarToast(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    // Toast
+    function mostrarToast(mensaje, tipo = 'success') {
+      const toast = document.getElementById('statusToast');
+      const toastElement = document.getElementById('toast');
+      const icon = document.getElementById('toastIcon');
+      const message = document.getElementById('toastMessage');
+      
+      icon.textContent = tipo === 'success' ? '✅' : '❌';
+      message.textContent = mensaje;
+      toastElement.className = `toast ${tipo}`;
+      
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // Cleanup
+    window.addEventListener('beforeunload', () => {
+      if (unsubscribe) unsubscribe();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artista - Cancionero Gen</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cancionero.css">
+</head>
+<body>
+  <div class="sidebar">
+    <a href="cancionero.html" class="menu-item active">
+      <img src="guitarra.svg" alt="Cancionero" class="menu-icon">
+      <span class="menu-text">← Cancionero</span>
+    </a>
+  </div>
+
+  <main class="main">
+    <section class="hero">
+      <div class="hero-content">
+        <h1 id="artistaNombre">🎤 Cargando artista...</h1>
+        <p id="artistaInfo">Todas las canciones de este artista</p>
+      </div>
+    </section>
+
+    <section class="top-canciones">
+      <div class="section-header">
+        <h2 id="cancionesCount">📚 Canciones</h2>
+        <a href="cancionero.html" class="view-all-link">← Volver al cancionero</a>
+      </div>
+      
+      <div class="canciones-grid" id="cancionesGrid">
+        <div class="loading-state">
+          <div class="loading-icon">🎵</div>
+          <p>Cargando canciones del artista...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { DatabaseService } from './firebase-config.js';
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const nombreArtista = urlParams.get('nombre');
+      
+      if (nombreArtista) {
+        await cargarCancionesArtista(decodeURIComponent(nombreArtista));
+      }
+    });
+
+    async function cargarCancionesArtista(nombreArtista) {
+      try {
+        const todasCanciones = await DatabaseService.getCanciones();
+        const cancionesArtista = todasCanciones.filter(c => 
+          (c.artista || 'Desconocido') === nombreArtista
+        ).sort((a, b) => (b.reproducciones || 0) - (a.reproducciones || 0));
+        
+        document.title = `${nombreArtista} - Cancionero Gen`;
+        document.getElementById('artistaNombre').textContent = `🎤 ${nombreArtista}`;
+        document.getElementById('cancionesCount').textContent = `📚 ${cancionesArtista.length} canciones`;
+        
+        renderizarCanciones(cancionesArtista);
+        
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function renderizarCanciones(canciones) {
+      const container = document.getElementById('cancionesGrid');
+      container.innerHTML = '';
+      
+      if (canciones.length === 0) {
+        container.innerHTML = `
+          <div class="loading-state">
+            <div class="loading-icon">🔍</div>
+            <p>Este artista no tiene canciones aún</p>
+          </div>
+        `;
+        return;
+      }
+      
+      canciones.forEach((cancion, index) => {
+        const card = document.createElement('div');
+        card.className = 'cancion-card';
+        card.onclick = () => window.open(`cancion.html?id=${cancion.id}`, '_blank');
+        
+        card.innerHTML = `
+          <div class="cancion-content">
+            <div class="cancion-header">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                  <span class="ranking-badge">#${index + 1}</span>
+                  <h3 class="cancion-titulo">${cancion.titulo}</h3>
+                </div>
+                <div class="cancion-meta">
+                  <div class="meta-item">
+                    <span>🎵</span>
+                    <span>${getCategoriaTexto(cancion.genero || 'tradicional')}</span>
+                  </div>
+                  <div class="meta-item">
+                    <span>👁️</span>
+                    <span>${cancion.reproducciones || 0} vistas</span>
+                  </div>
+                </div>
+              </div>
+              <div class="cancion-categoria">
+                <span>${getCategoriaIcon(cancion.categoria)}</span>
+                <span>${getCategoriaTexto(cancion.categoria)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    function getCategoriaTexto(valor) {
+      const categorias = {
+        'misa': 'Misa', 'gen': 'Gen', 'fogon': 'Fogón',
+        'tradicional': 'Tradicional', 'contemporaneo': 'Contemporáneo',
+        'folk': 'Folk', 'juvenil': 'Juvenil', 'liturgico': 'Litúrgico',
+        'adoracion': 'Adoración', 'alabanza': 'Alabanza'
+      };
+      return categorias[valor] || valor;
+    }
+
+    function getCategoriaIcon(categoria) {
+      const iconos = { 'misa': '⛪', 'gen': '❤️', 'fogon': '🔥' };
+      return iconos[categoria] || '🎵';
+    }
+  </script>
+</body>
+</html>

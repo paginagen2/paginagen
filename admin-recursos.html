@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Recursos - Gen Animadores</title>
+    <link rel="stylesheet" href="admin-recursos.css">
+    <!-- Firebase v9 SDK -->
+<!-- Firebase v9 SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+        
+        const firebaseConfig = {
+                  apiKey: "AIzaSyB7US5r--cM82usyzLqd-ckamgIdyewfKE",
+                  authDomain: "pagina-gen.firebaseapp.com",
+                  projectId: "pagina-gen",
+                  storageBucket: "pagina-gen.firebasestorage.app",
+                  messagingSenderId: "876893109130",
+                  appId: "1:876893109130:web:862f79fc7a609e512ee673",
+                  measurementId: "G-TCF3R6C846"
+                };
+            
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            
+            window.firebaseApp = app;
+            window.firebaseDb = db;
+            
+            console.log('🔥 Firebase Admin inicializado correctamente');
+        } catch (error) {
+            console.error('❌ Error inicializando Firebase:', error);
+        }
+    </script>
+</head>
+<body>
+    <!-- Header de administración -->
+    <div class="admin-header">
+        <div class="admin-container">
+            <h1>🔐 Administración de Recursos</h1>
+            <div class="admin-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPendientes">0</span>
+                    <span class="stat-label">Pendientes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPublicados">0</span>
+                    <span class="stat-label">Publicados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalRechazados">0</span>
+                    <span class="stat-label">Rechazados</span>
+                </div>
+            </div>
+            <div class="admin-actions">
+                <button onclick="recargarDatos()" class="btn-action reload">🔄 Recargar</button>
+                <a href="gen-animadores.html" class="btn-action back">← Volver</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar después del header -->
+    <div style="text-align: center; margin: 2rem 0;">
+        <a href="admin-canciones.html" style="padding: 1rem 2rem; background: var(--secondary-color); color: white; border: none; border-radius: 8px; text-decoration: none; display: inline-block; margin-right: 1rem;">
+            🎵 Administrar Canciones
+        </a>
+        <a href="admin-recursos.html" style="padding: 1rem 2rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; text-decoration: none; display: inline-block;">
+            📚 Administrar Recursos
+        </a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="admin-filters">
+        <div class="admin-container">
+            <div class="filter-group">
+                <label>Estado:</label>
+                <select id="filtroEstado" onchange="aplicarFiltros()">
+                    <option value="todos">Todos los estados</option>
+                    <option value="pendiente" selected>Pendientes</option>
+                    <option value="publicado">Publicados</option>
+                    <option value="rechazado">Rechazados</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Categoría:</label>
+                <select id="filtroCategoria" onchange="aplicarFiltros()">
+                    <option value="todas">Todas las categorías</option>
+                    <option value="dinamicas">👥 Dinámicas</option>
+                    <option value="juegos">🎲 Juegos</option>
+                    <option value="reflexiones">🤔 Reflexiones</option>
+                    <option value="retiros">⛰️ Retiros</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <input type="text" id="busqueda" placeholder="Buscar por título..." onkeyup="aplicarFiltros()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de recursos -->
+    <div class="admin-content">
+        <div class="admin-container">
+            <div id="loadingAdmin" class="loading-admin">
+                <div class="spinner"></div>
+                <p>Cargando recursos...</p>
+            </div>
+            
+            <div id="recursosAdmin" class="recursos-admin">
+                <!-- Los recursos se cargarán aquí dinámicamente -->
+            </div>
+            
+            <div id="noResultados" class="no-resultados" style="display: none;">
+                <h3>🔍 No se encontraron recursos</h3>
+                <p>Intenta cambiar los filtros o buscar otros términos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalle del recurso -->
+    <div id="modalDetalle" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button onclick="cerrarModalDetalle()" class="modal-close">✕</button>
+            <div id="contenidoDetalle"></div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div id="modalConfirm" class="modal-overlay" style="display: none;">
+        <div class="modal-content modal-small">
+            <div class="confirm-content">
+                <h3 id="confirmTitulo"></h3>
+                <p id="confirmMensaje"></p>
+                <div class="confirm-actions">
+                    <button onclick="cerrarModalConfirm()" class="btn-cancel">Cancelar</button>
+                    <button id="btnConfirmar" class="btn-confirm">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-recursos.js"></script>
+</body>
+</html>
